@@ -101,10 +101,15 @@ function sendMail() {
 
     const subject = encodeURIComponent("New Quote Request from " + name);
     
-    let bodyText = `Name: ${name}\nPhone: ${phone}\nEmail: \( {email}\n\nProject Details:\n \){message}`;
+    const bodyText = 
+        "Name: " + name + "\n" +
+        "Phone: " + phone + "\n" +
+        "Email: " + email + "\n\n" +
+        "Project Details:\n" + message;
+
     const body = encodeURIComponent(bodyText);
 
-    // Open email app with pre-filled subject and body
+    // Open email with pre-filled subject and body
     window.location.href = `mailto:djmprojectpro@gmail.com?subject=\( {subject}&body= \){body}`;
 }
-</script>
+</script>>
