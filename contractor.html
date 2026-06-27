@@ -21,22 +21,56 @@
                         <div class="text-[10px] text-orange-500 font-medium -mt-1 tracking-[1.5px]">Contractor Portal</div>
                     </div>
                 </div>
-                <button onclick="logout()" class="px-5 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-full text-sm">Logout</button>
+                <div id="navUser" class="hidden items-center gap-x-3">
+                    <span id="navUsername" class="text-sm text-zinc-400"></span>
+                    <button onclick="logout()" class="px-5 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-full text-sm">Logout</button>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- Login Screen -->
-    <div id="loginScreen" class="max-w-sm mx-auto mt-16 text-center">
-        <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-10">
-            <h1 class="text-3xl font-bold mb-2">Welcome back, Dylan</h1>
-            <p class="text-zinc-400 mb-8">DJM Project Pro's Contractor Tools</p>
+    <!-- Login / Register Screen -->
+    <div id="authScreen" class="max-w-md mx-auto mt-12 px-6">
+        <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
             
-            <button onclick="login()" 
-                    class="w-full bg-gradient-to-r from-orange-600 to-orange-500 py-5 text-xl font-bold rounded-3xl">
-                LOG IN AS DYLAN
-            </button>
-            <p class="text-xs text-zinc-500 mt-4">7-day free trial • $29/mo after</p>
+            <!-- Tabs -->
+            <div class="flex bg-zinc-800 rounded-2xl p-1 mb-8">
+                <button onclick="showAuthTab(0)" class="flex-1 py-3 rounded-2xl font-semibold auth-tab active" id="authTab0">Login</button>
+                <button onclick="showAuthTab(1)" class="flex-1 py-3 rounded-2xl font-semibold auth-tab" id="authTab1">Register</button>
+            </div>
+
+            <!-- Login Form -->
+            <div id="loginForm">
+                <div class="mb-5">
+                    <label class="block text-sm font-semibold mb-2">Username</label>
+                    <input id="loginUsername" type="text" class="w-full bg-black border border-zinc-700 rounded-2xl px-6 py-4 text-lg" placeholder="admin or your username">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold mb-2">Password</label>
+                    <input id="loginPassword" type="password" class="w-full bg-black border border-zinc-700 rounded-2xl px-6 py-4 text-lg" placeholder="••••••••">
+                </div>
+                <button onclick="login()" class="w-full bg-gradient-to-r from-orange-600 to-orange-500 py-5 text-xl font-bold rounded-3xl">
+                    LOG IN
+                </button>
+                <p class="text-center text-xs text-zinc-500 mt-4">Admin: username = <span class="font-mono">admin</span></p>
+            </div>
+
+            <!-- Register Form -->
+            <div id="registerForm" class="hidden">
+                <div class="mb-5">
+                    <label class="block text-sm font-semibold mb-2">Choose Username</label>
+                    <input id="regUsername" type="text" class="w-full bg-black border border-zinc-700 rounded-2xl px-6 py-4 text-lg" placeholder="yourname">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold mb-2">Create Password</label>
+                    <input id="regPassword" type="password" class="w-full bg-black border border-zinc-700 rounded-2xl px-6 py-4 text-lg" placeholder="••••••••">
+                </div>
+                <button onclick="register()" class="w-full bg-emerald-600 hover:bg-emerald-500 py-5 text-xl font-bold rounded-3xl">
+                    CREATE ACCOUNT
+                </button>
+                <p class="text-center text-xs text-zinc-500 mt-4">Contractors can register themselves here</p>
+            </div>
+
         </div>
     </div>
 
@@ -46,20 +80,17 @@
         <div class="flex justify-between items-center my-8">
             <div>
                 <h1 class="text-3xl font-bold">Dashboard</h1>
-                <p class="text-zinc-400">Welcome back, Dylan 👋</p>
-            </div>
-            <div class="text-right">
-                <div class="text-emerald-400 text-sm">● Online</div>
-                <div class="text-xs text-zinc-500">Carbon County, PA</div>
+                <p class="text-zinc-400">Welcome back, <span id="welcomeName"></span> <span id="roleBadge"></span></p>
             </div>
         </div>
 
         <!-- Tabs -->
         <div class="flex bg-zinc-900 rounded-3xl p-1 mb-6 text-sm w-fit">
-            <button onclick="showTab(0)" class="tab-btn px-8 py-3 rounded-3xl font-semibold active" id="tab0">Overview</button>
+            <button onclick="showTab(0)" class="tab-btn px-8 py-3 rounded-3xl font-semibold" id="tab0">Overview</button>
             <button onclick="showTab(1)" class="tab-btn px-8 py-3 rounded-3xl font-semibold" id="tab1">Quotes</button>
             <button onclick="showTab(2)" class="tab-btn px-8 py-3 rounded-3xl font-semibold" id="tab2">Jobs</button>
             <button onclick="showTab(3)" class="tab-btn px-8 py-3 rounded-3xl font-semibold" id="tab3">AI Coach</button>
+            <button onclick="showTab(4)" class="tab-btn px-8 py-3 rounded-3xl font-semibold hidden" id="tab4">Admin</button>
         </div>
 
         <!-- Overview -->
@@ -87,19 +118,10 @@
 
             <div id="quoteForm" class="hidden bg-zinc-900 border border-zinc-800 rounded-3xl p-8 mb-8">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
-                    <div>
-                        <label class="block text-sm font-semibold mb-2">Client Name</label>
-                        <input id="clientName" type="text" class="w-full bg-black border border-zinc-700 rounded-2xl px-6 py-4 text-lg" placeholder="John Smith">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-semibold mb-2">Project</label>
-                        <input id="projectType" type="text" class="w-full bg-black border border-zinc-700 rounded-2xl px-6 py-4 text-lg" placeholder="Deck 20x30 Composite">
-                    </div>
+                    <div><label class="block text-sm font-semibold mb-2">Client Name</label><input id="clientName" type="text" class="w-full bg-black border border-zinc-700 rounded-2xl px-6 py-4 text-lg"></div>
+                    <div><label class="block text-sm font-semibold mb-2">Project</label><input id="projectType" type="text" class="w-full bg-black border border-zinc-700 rounded-2xl px-6 py-4 text-lg"></div>
                 </div>
-                <div class="mb-6">
-                    <label class="block text-sm font-semibold mb-2">Amount ($)</label>
-                    <input id="quoteAmount" type="text" class="w-full bg-black border border-zinc-700 rounded-2xl px-6 py-4 text-lg" placeholder="12500">
-                </div>
+                <div class="mb-6"><label class="block text-sm font-semibold mb-2">Amount ($)</label><input id="quoteAmount" type="text" class="w-full bg-black border border-zinc-700 rounded-2xl px-6 py-4 text-lg"></div>
                 <div class="flex gap-4">
                     <button onclick="submitQuote()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 py-4 rounded-3xl font-bold">Save Quote</button>
                     <button onclick="hideQuoteForm()" class="flex-1 bg-zinc-700 hover:bg-zinc-600 py-4 rounded-3xl font-bold">Cancel</button>
@@ -121,38 +143,133 @@
         <!-- AI Coach -->
         <div id="panel-3" class="tab-panel hidden">
             <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 mb-6 min-h-[280px]" id="aiChat">
-                <div class="text-emerald-400">AI Coach: Hi Dylan! What do you need help with today? (pricing, scheduling, materials, etc.)</div>
+                <div class="text-emerald-400">AI Coach: Hi! What do you need help with today?</div>
             </div>
-            
             <div class="flex gap-3">
-                <input id="aiInput" type="text" placeholder="How should I price a 400 sq ft composite deck?" 
-                       class="flex-1 bg-zinc-900 border border-zinc-700 rounded-3xl px-6 py-4 text-lg">
+                <input id="aiInput" type="text" placeholder="How should I price a 400 sq ft composite deck?" class="flex-1 bg-zinc-900 border border-zinc-700 rounded-3xl px-6 py-4 text-lg">
                 <button onclick="askAI()" class="bg-orange-600 hover:bg-orange-500 px-10 rounded-3xl font-bold">Ask</button>
+            </div>
+        </div>
+
+        <!-- Admin Panel -->
+        <div id="panel-4" class="tab-panel hidden">
+            <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
+                <h3 class="font-bold text-xl mb-5">Admin Tools</h3>
+                <div class="space-y-4">
+                    <div class="bg-zinc-800 rounded-2xl p-5">
+                        <div class="font-semibold mb-1">Registered Contractors</div>
+                        <div id="adminUserList" class="text-sm text-zinc-400"></div>
+                    </div>
+                    <button onclick="clearAllData()" class="bg-red-600 hover:bg-red-500 px-6 py-3 rounded-2xl text-sm font-semibold">Clear All Data (Reset)</button>
+                </div>
             </div>
         </div>
 
     </div>
 
     <script>
+        // ==================== AUTH SYSTEM ====================
+        let currentUser = null;
+
+        function showAuthTab(n) {
+            document.getElementById('loginForm').classList.toggle('hidden', n === 1);
+            document.getElementById('registerForm').classList.toggle('hidden', n === 0);
+            document.getElementById('authTab0').classList.toggle('bg-orange-600', n === 0);
+            document.getElementById('authTab1').classList.toggle('bg-orange-600', n === 1);
+        }
+
+        function register() {
+            const username = document.getElementById('regUsername').value.trim();
+            const password = document.getElementById('regPassword').value.trim();
+
+            if (!username || !password) {
+                alert("Please enter username and password");
+                return;
+            }
+
+            let users = JSON.parse(localStorage.getItem('djm_users') || '{}');
+            
+            if (users[username]) {
+                alert("Username already exists");
+                return;
+            }
+
+            users[username] = password;
+            localStorage.setItem('djm_users', JSON.stringify(users));
+            alert("Account created! You can now log in.");
+            showAuthTab(0);
+        }
+
         function login() {
-            document.getElementById('loginScreen').classList.add('hidden');
+            const username = document.getElementById('loginUsername').value.trim();
+            const password = document.getElementById('loginPassword').value.trim();
+
+            if (!username || !password) {
+                alert("Please enter username and password");
+                return;
+            }
+
+            // Admin login
+            if (username === "admin" && password === "Bree1223!") {
+                currentUser = { username: "admin", role: "admin" };
+                localStorage.setItem('djm_current_user', JSON.stringify(currentUser));
+                enterDashboard();
+                return;
+            }
+
+            // Contractor login
+            let users = JSON.parse(localStorage.getItem('djm_users') || '{}');
+            if (users[username] && users[username] === password) {
+                currentUser = { username: username, role: "contractor" };
+                localStorage.setItem('djm_current_user', JSON.stringify(currentUser));
+                enterDashboard();
+                return;
+            }
+
+            alert("Invalid username or password");
+        }
+
+        function enterDashboard() {
+            document.getElementById('authScreen').classList.add('hidden');
             document.getElementById('dashboard').classList.remove('hidden');
+            document.getElementById('navUser').classList.remove('hidden');
+            document.getElementById('navUsername').innerText = currentUser.username;
+
+            document.getElementById('welcomeName').innerText = currentUser.username;
+
+            // Show Admin tab only for admin
+            if (currentUser.role === "admin") {
+                document.getElementById('tab4').classList.remove('hidden');
+                document.getElementById('roleBadge').innerHTML = `<span class="ml-2 px-3 py-1 bg-orange-600 text-xs rounded-full">ADMIN</span>`;
+            } else {
+                document.getElementById('tab4').classList.add('hidden');
+                document.getElementById('roleBadge').innerHTML = `<span class="ml-2 px-3 py-1 bg-zinc-700 text-xs rounded-full">CONTRACTOR</span>`;
+            }
+
             loadQuotes();
             loadJobs();
             showTab(0);
         }
 
-        function logout() { location.reload(); }
+        function logout() {
+            localStorage.removeItem('djm_current_user');
+            location.reload();
+        }
 
+        // ==================== TABS ====================
         function showTab(n) {
             document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
             document.getElementById('panel-' + n).classList.remove('hidden');
+            
             document.querySelectorAll('.tab-btn').forEach((btn, i) => {
                 btn.classList.toggle('bg-orange-600', i === n);
                 btn.classList.toggle('text-white', i === n);
             });
+
+            if (n === 4) loadAdminUsers();
         }
 
+        // ==================== QUOTES ====================
         let quotes = [];
         function loadQuotes() {
             const saved = localStorage.getItem('djm_quotes');
@@ -164,7 +281,7 @@
             const container = document.getElementById('quotesList');
             container.innerHTML = '';
             if (quotes.length === 0) {
-                container.innerHTML = '<p class="text-zinc-400">No quotes yet. Create one above!</p>';
+                container.innerHTML = '<p class="text-zinc-400">No quotes yet.</p>';
                 return;
             }
             quotes.forEach((q) => {
@@ -192,9 +309,9 @@
             document.getElementById('clientName').value = '';
             document.getElementById('projectType').value = '';
             document.getElementById('quoteAmount').value = '';
-            alert("✅ Quote saved successfully!");
         }
 
+        // ==================== JOBS ====================
         let jobs = [];
         function loadJobs() {
             const saved = localStorage.getItem('djm_jobs');
@@ -206,7 +323,7 @@
             const container = document.getElementById('jobsList');
             container.innerHTML = '';
             if (jobs.length === 0) {
-                container.innerHTML = '<p class="text-zinc-400">No jobs yet. Add one above!</p>';
+                container.innerHTML = '<p class="text-zinc-400">No jobs yet.</p>';
                 return;
             }
             jobs.forEach((job, index) => {
@@ -217,7 +334,7 @@
             });
         }
         function addNewJob() {
-            const title = prompt("Job title?", "New Job - " + new Date().toLocaleDateString());
+            const title = prompt("Job title?", "New Job");
             if (!title) return;
             jobs.unshift({ title, status: "Ready to start" });
             saveJobs();
@@ -229,6 +346,7 @@
             renderJobs();
         }
 
+        // ==================== AI COACH ====================
         function askAI() {
             const input = document.getElementById('aiInput');
             const chat = document.getElementById('aiChat');
@@ -242,20 +360,20 @@
 
                 if (q.includes("deck") || q.includes("porch")) {
                     if (q.includes("price") || q.includes("cost") || q.includes("how much") || q.includes("38k") || q.includes("high")) {
-                        reply = "AI Coach: 400 sq ft composite deck usually costs $38k–$43k. $92–$108/sq ft all-in is normal. 35% margin after materials & labor.";
+                        reply = "AI Coach: 400 sq ft composite deck usually costs $38k–$43k. $92–$108/sq ft all-in is normal.";
                     } else if (q.includes("build") || q.includes("how to")) {
-                        reply = "AI Coach: Use 6x6 posts 8ft on center, 2x10 joists 16\" OC. Add 10% waste. Want a full material list?";
+                        reply = "AI Coach: Use 6x6 posts 8ft on center, 2x10 joists 16\" OC. Add 10% waste.";
                     } else {
                         reply = "AI Coach: 400 sq ft composite deck ≈ $38k–$43k and takes 4–6 days with 2 guys.";
                     }
                 } else if (q.includes("fence") || q.includes("fencing") || q.includes("100 ft")) {
-                    reply = "AI Coach: 100 ft of 6ft vinyl privacy fence usually runs $4,800–$6,500 installed. Wood is $3,200–$4,500.";
-                } else if (q.includes("labor") || q.includes("hour") || q.includes("$65")) {
+                    reply = "AI Coach: 100 ft of 6ft vinyl privacy fence usually runs $4,800–$6,500 installed.";
+                } else if (q.includes("labor") || q.includes("hour")) {
                     reply = "AI Coach: I charge $65/hr per man. Two-man crew = $130/hr. Add 35% markup on materials.";
-                } else if (q.includes("time") || q.includes("clock") || q.includes("when") || q.includes("schedule")) {
-                    reply = "AI Coach: It’s contractor o’clock 💪 Best time to start decks is 7–8am. What job are you working on today?";
+                } else if (q.includes("time") || q.includes("when") || q.includes("schedule")) {
+                    reply = "AI Coach: It’s contractor o’clock 💪 Best time to start decks is 7–8am.";
                 } else {
-                    reply = "AI Coach: For most decks I recommend $92–$108/sq ft. Add 10% waste + 35% margin after labor. Need help with a specific job?";
+                    reply = "AI Coach: For most decks I recommend $92–$108/sq ft. Add 10% waste + 35% margin after labor.";
                 }
 
                 chat.innerHTML += `<div class="mt-2 text-emerald-400">${reply}</div>`;
@@ -265,10 +383,7 @@
             input.value = '';
         }
 
-        window.onload = function() {
-            // Uncomment the line below if you want it to auto-login for testing
-            // login();
-        }
-    </script>
-</body>
-</html>
+        // ==================== ADMIN ====================
+        function loadAdminUsers() {
+            const container = document.getElementById('adminUserList');
+            let users = JSON.parse(localStorage.getItem('d
