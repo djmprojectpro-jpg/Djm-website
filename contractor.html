@@ -38,7 +38,7 @@
                 <button onclick="showAuthTab(1)" class="flex-1 py-3 rounded-2xl font-semibold" id="authTab1">Register</button>
             </div>
 
-            <!-- Login Form -->
+            <!-- Login -->
             <div id="loginForm">
                 <div class="mb-4">
                     <label class="block text-sm font-semibold mb-2">Username</label>
@@ -53,7 +53,7 @@
                 </button>
             </div>
 
-            <!-- Register Form -->
+            <!-- Register -->
             <div id="registerForm" class="hidden">
                 <div class="mb-4">
                     <label class="block text-sm font-semibold mb-2">Choose Username</label>
@@ -158,7 +158,7 @@
             </div>
         </div>
 
-        <!-- Admin Panel -->
+        <!-- Admin -->
         <div id="panel-4" class="tab-panel hidden">
             <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
                 <h3 class="font-bold text-xl mb-5">Admin Tools</h3>
@@ -197,6 +197,7 @@
                 return;
             }
 
+            // Admin
             if (username.toLowerCase() === "admin" && password === "Bree1223!") {
                 currentUser = { username: "admin", role: "admin" };
                 localStorage.setItem('djm_current_user', JSON.stringify(currentUser));
@@ -204,6 +205,7 @@
                 return;
             }
 
+            // Contractor
             let users = JSON.parse(localStorage.getItem('djm_users') || '{}');
             if (users[username] && users[username] === password) {
                 currentUser = { username: username, role: "contractor" };
@@ -264,4 +266,132 @@
         function showTab(n) {
             document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
             document.getElementById('panel-' + n).classList.remove('hidden');
-            document.querySelectorAll('.tab-btn').forEach((btn, i
+            document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+                btn.classList.toggle('bg-orange-600', i === n);
+                btn.classList.toggle('text-white', i === n);
+            });
+            if (n === 4) loadAdminUsers();
+        }
+
+        // Quotes
+        let quotes = [];
+        function loadQuotes() {
+            const saved = localStorage.getItem('djm_quotes');
+            if (saved) quotes = JSON.parse(saved);
+            renderQuotes();
+        }
+        function saveQuotes() { localStorage.setItem('djm_quotes', JSON.stringify(quotes)); }
+        function renderQuotes() {
+            const container = document.getElementById('quotesList');
+            container.innerHTML = '';
+            if (quotes.length === 0) {
+                container.innerHTML = '<p class="text-zinc-400">No quotes yet.</p>';
+                return;
+            }
+            quotes.forEach((q) => {
+                const div = document.createElement('div');
+                div.className = 'bg-zinc-800 rounded-2xl p-5 flex justify-between items-center';
+                div.innerHTML = `<div><div class="font-semibold">\( {q.client}</div><div class="text-sm text-zinc-400"> \){q.project} • $${q.amount}</div></div><div class="text-emerald-400 text-sm font-semibold">SAVED</div>`;
+                container.appendChild(div);
+            });
+        }
+        function showQuoteForm() {
+            document.getElementById('quoteForm').classList.remove('hidden');
+            showTab(1);
+        }
+        function hideQuoteForm() {
+            document.getElementById('quoteForm').classList.add('hidden');
+        }
+        function submitQuote() {
+            const client = document.getElementById('clientName').value || "New Client";
+            const project = document.getElementById('projectType').value || "Project";
+            const amount = document.getElementById('quoteAmount').value || "0";
+            quotes.unshift({ client, project, amount });
+            saveQuotes();
+            renderQuotes();
+            hideQuoteForm();
+            document.getElementById('clientName').value = '';
+            document.getElementById('projectType').value = '';
+            document.getElementById('quoteAmount').value = '';
+        }
+
+        // Jobs
+        let jobs = [];
+        function loadJobs() {
+            const saved = localStorage.getItem('djm_jobs');
+            if (saved) jobs = JSON.parse(saved);
+            renderJobs();
+        }
+        function saveJobs() { localStorage.setItem('djm_jobs', JSON.stringify(jobs)); }
+        function renderJobs() {
+            const container = document.getElementById('jobsList');
+            container.innerHTML = '';
+            if (jobs.length === 0) {
+                container.innerHTML = '<p class="text-zinc-400">No jobs yet.</p>';
+                return;
+            }
+            jobs.forEach((job, index) => {
+                const div = document.createElement('div');
+                div.className = 'bg-zinc-900 border border-zinc-800 rounded-3xl p-6 flex justify-between items-center';
+                div.innerHTML = `<div><div class="font-semibold">\( {job.title}</div><div class="text-sm text-zinc-400"> \){job.status}</div></div><button onclick="completeJob(${index}, this)" class="bg-emerald-600 hover:bg-emerald-500 px-6 py-2 rounded-full text-sm font-semibold">Mark Complete</button>`;
+                container.appendChild(div);
+            });
+        }
+        function addNewJob() {
+            const title = prompt("Job title?", "New Job");
+            if (!title) return;
+            jobs.unshift({ title, status: "Ready to start" });
+            saveJobs();
+            renderJobs();
+        }
+        function completeJob(index, btn) {
+            jobs[index].status = "Completed ✅";
+            saveJobs();
+            renderJobs();
+        }
+
+        // AI Coach
+        function askAI() {
+            const input = document.getElementById('aiInput');
+            const chat = document.getElementById('aiChat');
+            const q = input.value.trim().toLowerCase();
+            if (!q) return;
+
+            chat.innerHTML += `<div class="mt-4 text-orange-400">You: ${input.value}</div>`;
+
+            setTimeout(() => {
+                let reply = "AI Coach: I can help with pricing, scheduling, materials, labor rates, and local Carbon County advice.";
+
+                if (q.includes("deck") || q.includes("porch")) {
+                    if (q.includes("price") || q.includes("cost") || q.includes("how much") || q.includes("38k") || q.includes("high")) {
+                        reply = "AI Coach: 400 sq ft composite deck usually costs $38k–$43k. $92–$108/sq ft all-in is normal.";
+                    } else if (q.includes("build") || q.includes("how to")) {
+                        reply = "AI Coach: Use 6x6 posts 8ft on center, 2x10 joists 16\" OC. Add 10% waste.";
+                    } else {
+                        reply = "AI Coach: 400 sq ft composite deck ≈ $38k–$43k and takes 4–6 days with 2 guys.";
+                    }
+                } else if (q.includes("fence") || q.includes("fencing") || q.includes("100 ft")) {
+                    reply = "AI Coach: 100 ft of 6ft vinyl privacy fence usually runs $4,800–$6,500 installed.";
+                } else if (q.includes("labor") || q.includes("hour")) {
+                    reply = "AI Coach: I charge $65/hr per man. Two-man crew = $130/hr. Add 35% markup on materials.";
+                } else if (q.includes("time") || q.includes("when") || q.includes("schedule")) {
+                    reply = "AI Coach: It’s contractor o’clock 💪 Best time to start decks is 7–8am.";
+                } else {
+                    reply = "AI Coach: For most decks I recommend $92–$108/sq ft. Add 10% waste + 35% margin after labor.";
+                }
+
+                chat.innerHTML += `<div class="mt-2 text-emerald-400">${reply}</div>`;
+                chat.scrollTop = chat.scrollHeight;
+            }, 650);
+
+            input.value = '';
+        }
+
+        function loadAdminUsers() {
+            const container = document.getElementById('adminUserList');
+            let users = JSON.parse(localStorage.getItem('djm_users') || '{}');
+            let html = '';
+            for (let u in users) {
+                html += `<div class="py-1">• ${u}</div>`;
+            }
+  
