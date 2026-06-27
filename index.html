@@ -49,14 +49,8 @@
                 </div>
 
                 <div class="flex items-center gap-x-3">
-                    <a href="#quote" 
-                       class="hidden md:block px-6 py-2.5 text-sm font-semibold border border-orange-600 hover:bg-orange-600 hover:text-white transition rounded-3xl">
-                        Request Quote
-                    </a>
-                    <a href="contractor.html" 
-                       class="px-6 py-2.5 bg-zinc-900 hover:bg-zinc-800 transition text-sm font-semibold rounded-3xl border border-zinc-700">
-                        Contractor Portal
-                    </a>
+                    <a href="#quote" class="hidden md:block px-6 py-2.5 text-sm font-semibold border border-orange-600 hover:bg-orange-600 hover:text-white transition rounded-3xl">Request Quote</a>
+                    <a href="contractor.html" class="px-6 py-2.5 bg-zinc-900 hover:bg-zinc-800 transition text-sm font-semibold rounded-3xl border border-zinc-700">Contractor Portal</a>
                 </div>
             </div>
         </div>
@@ -74,4 +68,150 @@
         </h1>
         
         <p class="max-w-md mx-auto text-xl text-zinc-400 mb-10">
-            Licensed &amp
+            Licensed &amp; insured contractor specializing in decks, fencing, painting, drywall, walkways, and full home improvements.
+        </p>
+
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="#quote" class="premium-button px-10 py-5 text-xl font-bold rounded-3xl inline-block">Get Your Free Quote</a>
+            <a href="contractor.html" class="px-10 py-5 text-xl font-semibold border border-zinc-700 hover:bg-zinc-900 rounded-3xl inline-block">Contractor Portal</a>
+        </div>
+    </div>
+
+    <!-- Services -->
+    <div id="services" class="max-w-7xl mx-auto px-6 pb-20">
+        <div class="text-center mb-12">
+            <div class="text-orange-500 font-semibold tracking-widest text-sm mb-3">WHAT WE DO BEST</div>
+            <h2 class="section-header">Professional Home Improvement Services</h2>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-7 hover:border-orange-600 transition">
+                <div class="text-4xl mb-4">🪵</div>
+                <h3 class="font-bold text-2xl mb-2">Decks &amp; Porches</h3>
+                <p class="text-zinc-400">Composite, pressure-treated, and custom deck builds. Repairs, staining, and railings.</p>
+            </div>
+
+            <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-7 hover:border-orange-600 transition">
+                <div class="text-4xl mb-4">🛡️</div>
+                <h3 class="font-bold text-2xl mb-2">Fencing &amp; Railings</h3>
+                <p class="text-zinc-400">Vinyl, wood, aluminum, and chain link. Privacy fences, pool fencing, and safety railings.</p>
+            </div>
+
+            <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-7 hover:border-orange-600 transition">
+                <div class="text-4xl mb-4">🎨</div>
+                <h3 class="font-bold text-2xl mb-2">Painting &amp; Drywall</h3>
+                <p class="text-zinc-400">Interior &amp; exterior painting, drywall repair, texture matching, and full room makeovers.</p>
+            </div>
+
+            <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-7 hover:border-orange-600 transition">
+                <div class="text-4xl mb-4">🪨</div>
+                <h3 class="font-bold text-2xl mb-2">Walkways &amp; Patios</h3>
+                <p class="text-zinc-400">Paver patios, concrete walkways, stamped concrete, and hardscaping solutions.</p>
+            </div>
+
+            <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-7 hover:border-orange-600 transition">
+                <div class="text-4xl mb-4">🏠</div>
+                <h3 class="font-bold text-2xl mb-2">Bathroom &amp; Kitchen</h3>
+                <p class="text-zinc-400">Full remodels, fixture upgrades, tile work, and accessible modifications.</p>
+            </div>
+
+            <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-7 hover:border-orange-600 transition">
+                <div class="text-4xl mb-4">🌿</div>
+                <h3 class="font-bold text-2xl mb-2">Landscaping &amp; Cleanup</h3>
+                <p class="text-zinc-400">Yard cleanup, debris removal, mulch beds, gravel refresh, and storm damage restoration.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quote Form -->
+    <div id="quote" class="max-w-3xl mx-auto px-6 pb-20">
+        <div class="text-center mb-10">
+            <div class="text-orange-500 font-semibold tracking-widest text-sm mb-3">FREE ESTIMATE</div>
+            <h2 class="section-header">Get Your Free Quote Today</h2>
+            <p class="text-zinc-400 mt-3">Licensed &amp; insured • Fast response within 2 hours</p>
+        </div>
+
+        <form id="quoteForm" onsubmit="sendRealQuote(event)" class="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 md:p-10 space-y-6">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Full Name</label>
+                    <input type="text" name="name" required class="w-full bg-black border border-zinc-700 focus:border-orange-500 rounded-2xl px-6 py-4 text-lg" placeholder="John Smith">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-2">Phone Number</label>
+                    <input type="tel" name="phone" required class="w-full bg-black border border-zinc-700 focus:border-orange-500 rounded-2xl px-6 py-4 text-lg" placeholder="(272) 394-5428">
+                </div>
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold mb-2">Email Address</label>
+                <input type="email" name="email" required class="w-full bg-black border border-zinc-700 focus:border-orange-500 rounded-2xl px-6 py-4 text-lg" placeholder="you@email.com">
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold mb-2">Project Details</label>
+                <textarea name="message" rows="5" required class="w-full bg-black border border-zinc-700 focus:border-orange-500 rounded-3xl px-6 py-5 text-lg resize-y" placeholder="Deck 20x30 composite in Lehighton, or describe your project..."></textarea>
+            </div>
+
+            <button type="submit" id="submitBtn" class="w-full premium-button py-6 text-2xl font-bold rounded-3xl">Send Quote Request</button>
+            <p class="text-center text-sm text-zinc-500">We’ll reply within 2 hours • No obligation</p>
+        </form>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-zinc-800 py-10">
+        <div class="max-w-7xl mx-auto px-6 text-center text-sm text-zinc-400">
+            <p class="mb-2">DJM Project Pro's • Carbon County, PA</p>
+            <p>(272) 394-5428 • djmprojectpro@gmail.com</p>
+            <p class="mt-4 text-xs">Licensed &amp; Insured • Serving Lehighton, Jim Thorpe, Nesquehoning, Palmerton &amp; surrounding areas</p>
+        </div>
+    </footer>
+
+    <!-- EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script>
+        (function() {
+            emailjs.init("UVm2jY2rw75Zv0pp");
+        })();
+
+        function sendRealQuote(e) {
+            e.preventDefault();
+            const form = e.target;
+            const btn = document.getElementById('submitBtn');
+            const originalText = btn.innerHTML;
+
+            btn.innerHTML = "Sending...";
+            btn.disabled = true;
+
+            emailjs.sendForm("service_u2hje9s", "template_xp9wml5", form)
+                .then(() => {
+                    btn.innerHTML = "✅ Sent! We'll contact you soon";
+                    btn.style.background = "#22c55e";
+                    btn.style.color = "#000";
+
+                    const toast = document.createElement('div');
+                    toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#22c55e;color:#000;padding:14px 28px;border-radius:9999px;font-weight:700;box-shadow:0 10px 15px rgb(0 0 0 / 0.3);z-index:99999';
+                    toast.textContent = "✅ Quote request sent to djmprojectpro@gmail.com";
+                    document.body.appendChild(toast);
+                    setTimeout(() => toast.remove(), 2800);
+
+                    form.reset();
+
+                    setTimeout(() => {
+                        btn.innerHTML = originalText;
+                        btn.disabled = false;
+                        btn.style.background = "";
+                        btn.style.color = "";
+                    }, 2200);
+                })
+                .catch((error) => {
+                    console.error(error);
+                    btn.innerHTML = "Try Again";
+                    btn.disabled = false;
+                    alert("Error sending. Please call or text (272) 394-5428 directly.");
+                });
+        }
+    </script>
+</body>
+</html>
