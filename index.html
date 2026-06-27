@@ -1,100 +1,77 @@
-<!-- ==================== IMPROVED QUOTE FORM ==================== -->
-<section id="quote" class="max-w-3xl mx-auto px-6 py-16 bg-[#0A0A0A]">
-    <div class="text-center mb-10">
-        <h2 class="text-4xl md:text-5xl font-bold tracking-tighter">Get Your Free Quote</h2>
-        <p class="text-zinc-400 mt-3 text-lg">Licensed &amp; insured • Fast response within 2 hours</p>
-    </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJM Project Pro's • Quality Craftsmanship. Done Right, Every Time.</title>
+    <meta name="description" content="Licensed & insured full-service general contractor in Carbon County, PA. Decks, fencing, painting, drywall, walkways, and all home improvement services.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+        .premium-button {
+            background: linear-gradient(90deg, #FF6B00, #FF5E00);
+            transition: all 0.3s ease;
+        }
+        .premium-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px -5px rgba(255, 107, 0, 0.4);
+        }
+        .section-header {
+            font-size: 2.25rem;
+            line-height: 2.5rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+        }
+    </style>
+</head>
+<body class="bg-[#0A0A0A] text-white">
 
-    <form id="quoteForm" onsubmit="sendRealQuote(event)" 
-          class="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 md:p-10 space-y-6">
+    <!-- Navbar -->
+    <nav class="bg-black border-b border-zinc-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex items-center gap-x-3">
+                    <div class="w-11 h-11 bg-orange-600 rounded-full flex items-center justify-center">
+                        <span class="text-white font-bold text-2xl">D</span>
+                    </div>
+                    <div>
+                        <div class="font-bold text-2xl tracking-tighter">DJM Project Pro's</div>
+                        <div class="text-[10px] text-orange-500 font-medium -mt-1 tracking-[1.5px]">ANOTHER DAY, ANOTHER PROJECT</div>
+                    </div>
+                </div>
+
+                <!-- Nav Links -->
+                <div class="hidden md:flex items-center gap-x-8 text-sm">
+                    <a href="#services" class="hover:text-orange-500 transition">Services</a>
+                    <a href="#quote" class="hover:text-orange-500 transition">Get Quote</a>
+                    <a href="contractor.html" class="hover:text-orange-500 transition">Contractor Portal</a>
+                </div>
+
+                <div class="flex items-center gap-x-3">
+                    <a href="#quote" 
+                       class="hidden md:block px-6 py-2.5 text-sm font-semibold border border-orange-600 hover:bg-orange-600 hover:text-white transition rounded-3xl">
+                        Request Quote
+                    </a>
+                    <a href="contractor.html" 
+                       class="px-6 py-2.5 bg-zinc-900 hover:bg-zinc-800 transition text-sm font-semibold rounded-3xl border border-zinc-700">
+                        Contractor Portal
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <div class="max-w-5xl mx-auto px-6 pt-16 pb-20 text-center">
+        <div class="inline-block px-4 py-1.5 bg-zinc-900 rounded-full text-sm mb-6 border border-zinc-800">
+            Serving Carbon County, PA • Lehighton, Jim Thorpe, Nesquehoning
+        </div>
         
-        <!-- Name + Phone row -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <div>
-                <label class="block text-sm font-semibold mb-2 text-zinc-300">Full Name</label>
-                <input type="text" id="name" name="name" required
-                       class="w-full bg-black border border-zinc-700 focus:border-orange-500 rounded-2xl px-6 py-4 text-lg placeholder:text-zinc-500"
-                       placeholder="John Smith">
-            </div>
-            
-            <div>
-                <label class="block text-sm font-semibold mb-2 text-zinc-300">Phone Number</label>
-                <input type="tel" id="phone" name="phone" required
-                       class="w-full bg-black border border-zinc-700 focus:border-orange-500 rounded-2xl px-6 py-4 text-lg placeholder:text-zinc-500"
-                       placeholder="(272) 394-5428">
-            </div>
-        </div>
-
-        <!-- Email -->
-        <div>
-            <label class="block text-sm font-semibold mb-2 text-zinc-300">Email Address</label>
-            <input type="email" id="email" name="email" required
-                   class="w-full bg-black border border-zinc-700 focus:border-orange-500 rounded-2xl px-6 py-4 text-lg placeholder:text-zinc-500"
-                   placeholder="you@email.com">
-        </div>
-
-        <!-- Project Details -->
-        <div>
-            <label class="block text-sm font-semibold mb-2 text-zinc-300">Project Details</label>
-            <textarea id="message" name="message" rows="5" required
-                      class="w-full bg-black border border-zinc-700 focus:border-orange-500 rounded-3xl px-6 py-5 text-lg placeholder:text-zinc-500 resize-y"
-                      placeholder="Deck 20x30 composite in Lehighton, or describe your project..."></textarea>
-        </div>
-
-        <!-- Submit Button -->
-        <button type="submit" id="submitBtn"
-                class="w-full bg-gradient-to-r from-[#FF6B00] to-[#FF5E00] hover:brightness-110 active:scale-[0.985] transition-all py-6 text-2xl font-bold rounded-3xl shadow-xl mt-2">
-            Send Quote Request
-        </button>
-
-        <p class="text-center text-sm text-zinc-500 pt-2">We’ll reply within 2 hours • No obligation</p>
-    </form>
-</section>
-
-<!-- ==================== EMAILJS (only add once if not already there) ==================== -->
-<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
-<script>
-  (function() {
-    emailjs.init("UVm2jY2rw75Zv0pp");   // ← your public key
-  })();
-
-  function sendRealQuote(e) {
-    e.preventDefault();
-
-    const form = e.target;
-    const btn = document.getElementById('submitBtn');
-    const originalText = btn.innerHTML;
-
-    btn.innerHTML = "Sending...";
-    btn.disabled = true;
-
-    emailjs.sendForm("service_u2hje9s", "template_xp9wml5", form)
-      .then(() => {
-        btn.innerHTML = "✅ Sent! We'll contact you soon";
-        btn.style.background = "linear-gradient(to right, #22c55e, #16a34a)";
-
-        showToast("✅ Quote request sent to djmprojectpro@gmail.com");
-
-        setTimeout(() => {
-          form.reset();
-          btn.innerHTML = originalText;
-          btn.disabled = false;
-          btn.style.background = "";
-        }, 2300);
-      })
-      .catch((error) => {
-        console.error(error);
-        btn.innerHTML = "Try Again";
-        btn.disabled = false;
-        alert("Error sending. Please call or text (272) 394-5428 directly.");
-      });
-  }
-
-  function showToast(msg) {
-    const toast = document.createElement('div');
-    toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#22c55e;color:#000;padding:14px 28px;border-radius:9999px;font-weight:700;box-shadow:0 10px 15px rgb(0 0 0 / 0.3);z-index:99999';
-    toast.textContent = msg;
-    document.body.appendChild(toast);
-    setTimeout(() => toast.remove(), 2800);
-  }
-</script>
+        <h1 class="text-6xl md:text-7xl font-bold tracking-tighter leading-none mb-6">
+            Quality Craftsmanship.<br>
+            <span class="text-orange-500">Done Right, Every Time.</span>
+        </h1>
+        
+        <p class="max-w-md mx-auto text-xl text-zinc-400 mb-10">
+            Licensed &amp
