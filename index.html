@@ -41,13 +41,6 @@
                     </div>
                 </div>
 
-                <!-- Nav Links -->
-                <div class="hidden md:flex items-center gap-x-8 text-sm">
-                    <a href="#services" class="hover:text-orange-500 transition">Services</a>
-                    <a href="#quote" class="hover:text-orange-500 transition">Get Quote</a>
-                    <a href="contractor.html" class="hover:text-orange-500 transition">Contractor Portal</a>
-                </div>
-
                 <div class="flex items-center gap-x-3">
                     <a href="#quote" class="hidden md:block px-6 py-2.5 text-sm font-semibold border border-orange-600 hover:bg-orange-600 hover:text-white transition rounded-3xl">Request Quote</a>
                     <a href="contractor.html" class="px-6 py-2.5 bg-zinc-900 hover:bg-zinc-800 transition text-sm font-semibold rounded-3xl border border-zinc-700">Contractor Portal</a>
@@ -168,7 +161,7 @@
         </div>
     </footer>
 
-    <!-- EmailJS -->
+    <!-- EmailJS with Dual Send (Main + Auto-Reply) -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <script>
         (function() {
@@ -184,7 +177,12 @@
             btn.innerHTML = "Sending...";
             btn.disabled = true;
 
+            // 1. Send main notification to you
             emailjs.sendForm("service_u2hje9s", "template_xp9wml5", form)
+                .then(() => {
+                    // 2. Send auto-reply to the customer
+                    return emailjs.sendForm("service_u2hje9s", "template_hpswgik", form);
+                })
                 .then(() => {
                     btn.innerHTML = "✅ Sent! We'll contact you soon";
                     btn.style.background = "#22c55e";
@@ -192,7 +190,7 @@
 
                     const toast = document.createElement('div');
                     toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#22c55e;color:#000;padding:14px 28px;border-radius:9999px;font-weight:700;box-shadow:0 10px 15px rgb(0 0 0 / 0.3);z-index:99999';
-                    toast.textContent = "✅ Quote request sent to djmprojectpro@gmail.com";
+                    toast.textContent = "✅ Quote sent + auto-reply delivered";
                     document.body.appendChild(toast);
                     setTimeout(() => toast.remove(), 2800);
 
@@ -206,7 +204,7 @@
                     }, 2200);
                 })
                 .catch((error) => {
-                    console.error(error);
+                    console.error("EmailJS Error:", error);
                     btn.innerHTML = "Try Again";
                     btn.disabled = false;
                     alert("Error sending. Please call or text (272) 394-5428 directly.");
