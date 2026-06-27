@@ -192,12 +192,14 @@
                 return;
             }
 
+            // Admin login (reserved)
             if (username.toLowerCase() === "admin" && password === "Bree1223!") {
                 localStorage.setItem('loggedInUser', 'admin');
                 showDashboard('Admin');
                 return;
             }
 
+            // Normal contractor login
             const users = JSON.parse(localStorage.getItem('contractorUsers') || '{}');
             if (users[username] && users[username] === password) {
                 localStorage.setItem('loggedInUser', username);
@@ -214,6 +216,12 @@
 
             if (!username || !password) {
                 alert("Please enter username and password");
+                return;
+            }
+
+            // Prevent registering as "admin"
+            if (username.toLowerCase() === "admin") {
+                alert("The username 'admin' is reserved. Please choose a different username.");
                 return;
             }
 
@@ -235,7 +243,6 @@
             document.getElementById('dashboard').classList.remove('hidden');
             document.getElementById('welcomeName').innerText = name;
 
-            // Load data when dashboard opens
             renderQuotes();
             renderJobs();
         }
@@ -396,7 +403,6 @@
                 document.getElementById('dashboard').classList.remove('hidden');
                 document.getElementById('welcomeName').innerText = user;
 
-                // Load data immediately after login
                 renderQuotes();
                 renderJobs();
             }
