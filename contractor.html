@@ -172,7 +172,8 @@
     </div>
 
     <script>
-        // ==================== AUTH SYSTEM ====================
+        let currentUser = null;
+
         function showRegister() {
             document.getElementById('loginScreen').classList.add('hidden');
             document.getElementById('registerScreen').classList.remove('hidden');
@@ -188,22 +189,22 @@
             const password = document.getElementById('password').value.trim();
 
             if (!username || !password) {
-                alert("Please enter both username and password");
+                alert("Please enter username and password");
                 return;
             }
 
-            // Admin login (reserved)
             if (username.toLowerCase() === "admin" && password === "Bree1223!") {
-                localStorage.setItem('loggedInUser', 'admin');
-                showDashboard('Admin');
+                currentUser = { username: "admin", role: "admin" };
+                localStorage.setItem('djm_current_user', JSON.stringify(currentUser));
+                enterDashboard();
                 return;
             }
 
-            // Normal contractor login
             const users = JSON.parse(localStorage.getItem('contractorUsers') || '{}');
             if (users[username] && users[username] === password) {
-                localStorage.setItem('loggedInUser', username);
-                showDashboard(username);
+                currentUser = { username: username, role: "contractor" };
+                localStorage.setItem('djm_current_user', JSON.stringify(currentUser));
+                enterDashboard();
                 return;
             }
 
@@ -219,9 +220,8 @@
                 return;
             }
 
-            // Prevent registering as "admin"
             if (username.toLowerCase() === "admin") {
-                alert("The username 'admin' is reserved. Please choose a different username.");
+                alert("The username 'admin' is reserved.");
                 return;
             }
 
@@ -233,26 +233,27 @@
 
             users[username] = password;
             localStorage.setItem('contractorUsers', JSON.stringify(users));
-            alert("Account created successfully! You can now log in.");
+            alert("Account created! You can now log in.");
             showLogin();
         }
 
-        function showDashboard(name) {
+        function enterDashboard() {
             document.getElementById('loginScreen').classList.add('hidden');
             document.getElementById('registerScreen').classList.add('hidden');
             document.getElementById('dashboard').classList.remove('hidden');
-            document.getElementById('welcomeName').innerText = name;
+            document.getElementById('navUser').classList.remove('hidden');
+            document.getElementById('navUsername').innerText = currentUser.username;
+            document.getElementById('welcomeName').innerText = currentUser.username;
 
             renderQuotes();
             renderJobs();
         }
 
         function logout() {
-            localStorage.removeItem('loggedInUser');
+            localStorage.removeItem('djm_current_user');
             location.reload();
         }
 
-        // ==================== TABS ====================
         function showTab(n) {
             document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
             document.getElementById('panel-' + n).classList.remove('hidden');
@@ -262,7 +263,12 @@
             });
         }
 
-        // ==================== QUOTES ====================
+        // ==================== USER-SPECIFIC STORAGE ====================
+        function getUserKey(key) {
+            return currentUser ? `\( {key}_ \){currentUser.username}` : key;
+        }
+
+        // ==================== QUOTES (per user) ====================
         function showQuoteForm() {
             document.getElementById('quoteForm').classList.remove('hidden');
             showTab(1);
@@ -277,9 +283,10 @@
             const project = document.getElementById('projectType').value || "Project";
             const amount = document.getElementById('quoteAmount').value || "0";
 
-            let quotes = JSON.parse(localStorage.getItem('quotes') || '[]');
+            const key = getUserKey('quotes');
+            let quotes = JSON.parse(localStorage.getItem(key) || '[]');
             quotes.unshift({ client, project, amount });
-            localStorage.setItem('quotes', JSON.stringify(quotes));
+            localStorage.setItem(key, JSON.stringify(quotes));
 
             renderQuotes();
             hideQuoteForm();
@@ -291,7 +298,8 @@
 
         function renderQuotes() {
             const container = document.getElementById('quotesList');
-            let quotes = JSON.parse(localStorage.getItem('quotes') || '[]');
+            const key = getUserKey('quotes');
+            let quotes = JSON.parse(localStorage.getItem(key) || '[]');
             container.innerHTML = '';
 
             if (quotes.length === 0) {
@@ -313,20 +321,22 @@
             });
         }
 
-        // ==================== JOBS ====================
+        // ==================== JOBS (per user) ====================
         function addNewJob() {
             const title = prompt("Job title?", "New Job");
             if (!title) return;
 
-            let jobs = JSON.parse(localStorage.getItem('jobs') || '[]');
+            const key = getUserKey('jobs');
+            let jobs = JSON.parse(localStorage.getItem(key) || '[]');
             jobs.unshift({ title, status: "Ready to start" });
-            localStorage.setItem('jobs', JSON.stringify(jobs));
+            localStorage.setItem(key, JSON.stringify(jobs));
             renderJobs();
         }
 
         function renderJobs() {
             const container = document.getElementById('jobsList');
-            let jobs = JSON.parse(localStorage.getItem('jobs') || '[]');
+            const key = getUserKey('jobs');
+            let jobs = JSON.parse(localStorage.getItem(key) || '[]');
             container.innerHTML = '';
 
             if (jobs.length === 0) {
@@ -351,9 +361,10 @@
         }
 
         function completeJob(index, btn) {
-            let jobs = JSON.parse(localStorage.getItem('jobs') || '[]');
+            const key = getUserKey('jobs');
+            let jobs = JSON.parse(localStorage.getItem(key) || '[]');
             jobs[index].status = "Completed ✅";
-            localStorage.setItem('jobs', JSON.stringify(jobs));
+            localStorage.setItem(key, JSON.stringify(jobs));
             renderJobs();
         }
 
@@ -396,12 +407,15 @@
 
         // ==================== INIT ====================
         window.onload = function() {
-            const user = localStorage.getItem('loggedInUser');
-            if (user) {
+            const saved = localStorage.getItem('djm_current_user');
+            if (saved) {
+                currentUser = JSON.parse(saved);
                 document.getElementById('loginScreen').classList.add('hidden');
                 document.getElementById('registerScreen').classList.add('hidden');
                 document.getElementById('dashboard').classList.remove('hidden');
-                document.getElementById('welcomeName').innerText = user;
+                document.getElementById('navUser').classList.remove('hidden');
+                document.getElementById('navUsername').innerText = currentUser.username;
+                document.getElementById('welcomeName').innerText = currentUser.username;
 
                 renderQuotes();
                 renderJobs();
