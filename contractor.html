@@ -43,7 +43,6 @@
     <!-- Dashboard -->
     <div id="dashboard" class="hidden max-w-6xl mx-auto px-6 pb-20">
         
-        <!-- Header -->
         <div class="flex justify-between items-center my-8">
             <div>
                 <h1 class="text-3xl font-bold">Dashboard</h1>
@@ -63,7 +62,7 @@
             <button onclick="showTab(3)" class="tab-btn px-8 py-3 rounded-3xl font-semibold" id="tab3">AI Coach</button>
         </div>
 
-        <!-- Overview Tab -->
+        <!-- Overview -->
         <div id="panel-0" class="tab-panel">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
                 <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-7">
@@ -79,21 +78,13 @@
                     <div class="text-zinc-400 mt-1">Pipeline this month ↑ 22%</div>
                 </div>
             </div>
-            
-            <button onclick="showTab(1)" 
-                    class="bg-orange-600 hover:bg-orange-500 px-8 py-4 rounded-3xl font-bold text-lg">
-                + Create New Quote
-            </button>
+            <button onclick="showTab(1)" class="bg-orange-600 hover:bg-orange-500 px-8 py-4 rounded-3xl font-bold text-lg">+ Create New Quote</button>
         </div>
 
-        <!-- Quotes Tab -->
+        <!-- Quotes -->
         <div id="panel-1" class="tab-panel hidden">
-            <button onclick="showQuoteForm()" 
-                    class="mb-6 bg-orange-600 hover:bg-orange-500 px-8 py-4 rounded-3xl font-bold text-lg">
-                + Create New Quote
-            </button>
+            <button onclick="showQuoteForm()" class="mb-6 bg-orange-600 hover:bg-orange-500 px-8 py-4 rounded-3xl font-bold text-lg">+ Create New Quote</button>
 
-            <!-- Quote Form -->
             <div id="quoteForm" class="hidden bg-zinc-900 border border-zinc-800 rounded-3xl p-8 mb-8">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
                     <div>
@@ -115,24 +106,19 @@
                 </div>
             </div>
 
-            <!-- Quotes List -->
             <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
                 <h3 class="font-bold text-xl mb-5">Recent Quotes</h3>
                 <div id="quotesList" class="space-y-4"></div>
             </div>
         </div>
 
-        <!-- Jobs Tab -->
+        <!-- Jobs -->
         <div id="panel-2" class="tab-panel hidden">
-            <button onclick="addNewJob()" 
-                    class="mb-6 bg-orange-600 hover:bg-orange-500 px-8 py-4 rounded-3xl font-bold text-lg">
-                + Add New Job
-            </button>
-            
+            <button onclick="addNewJob()" class="mb-6 bg-orange-600 hover:bg-orange-500 px-8 py-4 rounded-3xl font-bold text-lg">+ Add New Job</button>
             <div id="jobsList" class="space-y-4"></div>
         </div>
 
-        <!-- AI Coach Tab -->
+        <!-- AI Coach -->
         <div id="panel-3" class="tab-panel hidden">
             <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 mb-6 min-h-[280px]" id="aiChat">
                 <div class="text-emerald-400">AI Coach: Hi Dylan! What do you need help with today? (pricing, scheduling, materials, etc.)</div>
@@ -141,15 +127,13 @@
             <div class="flex gap-3">
                 <input id="aiInput" type="text" placeholder="How should I price a 400 sq ft composite deck?" 
                        class="flex-1 bg-zinc-900 border border-zinc-700 rounded-3xl px-6 py-4 text-lg">
-                <button onclick="askAI()" 
-                        class="bg-orange-600 hover:bg-orange-500 px-10 rounded-3xl font-bold">Ask</button>
+                <button onclick="askAI()" class="bg-orange-600 hover:bg-orange-500 px-10 rounded-3xl font-bold">Ask</button>
             </div>
         </div>
 
     </div>
 
     <script>
-        // Login
         function login() {
             document.getElementById('loginScreen').classList.add('hidden');
             document.getElementById('dashboard').classList.remove('hidden');
@@ -158,212 +142,133 @@
             showTab(0);
         }
 
-        function logout() {
-            location.reload();
-        }
+        function logout() { location.reload(); }
 
-        // Tabs
         function showTab(n) {
             document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
             document.getElementById('panel-' + n).classList.remove('hidden');
-            
             document.querySelectorAll('.tab-btn').forEach((btn, i) => {
                 btn.classList.toggle('bg-orange-600', i === n);
                 btn.classList.toggle('text-white', i === n);
             });
         }
 
-        // Quotes
         let quotes = [];
-
         function loadQuotes() {
             const saved = localStorage.getItem('djm_quotes');
             if (saved) quotes = JSON.parse(saved);
             renderQuotes();
         }
-
-        function saveQuotes() {
-            localStorage.setItem('djm_quotes', JSON.stringify(quotes));
-        }
-
+        function saveQuotes() { localStorage.setItem('djm_quotes', JSON.stringify(quotes)); }
         function renderQuotes() {
             const container = document.getElementById('quotesList');
             container.innerHTML = '';
-            
             if (quotes.length === 0) {
                 container.innerHTML = '<p class="text-zinc-400">No quotes yet. Create one above!</p>';
                 return;
             }
-            
-            quotes.forEach((q, index) => {
+            quotes.forEach((q) => {
                 const div = document.createElement('div');
                 div.className = 'bg-zinc-800 rounded-2xl p-5 flex justify-between items-center';
-                div.innerHTML = `
-                    <div>
-                        <div class="font-semibold">${q.client}</div>
-                        <div class="text-sm text-zinc-400">${q.project} • $${q.amount}</div>
-                    </div>
-                    <div class="text-emerald-400 text-sm font-semibold">SAVED</div>
-                `;
+                div.innerHTML = `<div><div class="font-semibold">\( {q.client}</div><div class="text-sm text-zinc-400"> \){q.project} • $${q.amount}</div></div><div class="text-emerald-400 text-sm font-semibold">SAVED</div>`;
                 container.appendChild(div);
             });
         }
-
         function showQuoteForm() {
             document.getElementById('quoteForm').classList.remove('hidden');
             showTab(1);
         }
-
         function hideQuoteForm() {
             document.getElementById('quoteForm').classList.add('hidden');
         }
-
         function submitQuote() {
             const client = document.getElementById('clientName').value || "New Client";
             const project = document.getElementById('projectType').value || "Project";
             const amount = document.getElementById('quoteAmount').value || "0";
-
             quotes.unshift({ client, project, amount });
             saveQuotes();
             renderQuotes();
             hideQuoteForm();
-
-            // Clear form
             document.getElementById('clientName').value = '';
             document.getElementById('projectType').value = '';
             document.getElementById('quoteAmount').value = '';
-
             alert("✅ Quote saved successfully!");
         }
 
-        // Jobs
         let jobs = [];
-
         function loadJobs() {
             const saved = localStorage.getItem('djm_jobs');
             if (saved) jobs = JSON.parse(saved);
             renderJobs();
         }
-
-        function saveJobs() {
-            localStorage.setItem('djm_jobs', JSON.stringify(jobs));
-        }
-
+        function saveJobs() { localStorage.setItem('djm_jobs', JSON.stringify(jobs)); }
         function renderJobs() {
             const container = document.getElementById('jobsList');
             container.innerHTML = '';
-
             if (jobs.length === 0) {
                 container.innerHTML = '<p class="text-zinc-400">No jobs yet. Add one above!</p>';
                 return;
             }
-
             jobs.forEach((job, index) => {
                 const div = document.createElement('div');
                 div.className = 'bg-zinc-900 border border-zinc-800 rounded-3xl p-6 flex justify-between items-center';
-                div.innerHTML = `
-                    <div>
-                        <div class="font-semibold">${job.title}</div>
-                        <div class="text-sm text-zinc-400">${job.status}</div>
-                    </div>
-                    <button onclick="completeJob(${index}, this)" 
-                            class="bg-emerald-600 hover:bg-emerald-500 px-6 py-2 rounded-full text-sm font-semibold">
-                        Mark Complete
-                    </button>
-                `;
+                div.innerHTML = `<div><div class="font-semibold">\( {job.title}</div><div class="text-sm text-zinc-400"> \){job.status}</div></div><button onclick="completeJob(${index}, this)" class="bg-emerald-600 hover:bg-emerald-500 px-6 py-2 rounded-full text-sm font-semibold">Mark Complete</button>`;
                 container.appendChild(div);
             });
         }
-
         function addNewJob() {
             const title = prompt("Job title?", "New Job - " + new Date().toLocaleDateString());
             if (!title) return;
-
             jobs.unshift({ title, status: "Ready to start" });
             saveJobs();
             renderJobs();
         }
-
         function completeJob(index, btn) {
             jobs[index].status = "Completed ✅";
             saveJobs();
             renderJobs();
         }
 
-        // AI Coach
-        <script>
-function askAI() {
-    const input = document.getElementById('aiInput');
-    const chat = document.getElementById('aiChat');
-    const q = input.value.trim().toLowerCase();
-    if (!q) return;
+        function askAI() {
+            const input = document.getElementById('aiInput');
+            const chat = document.getElementById('aiChat');
+            const q = input.value.trim().toLowerCase();
+            if (!q) return;
 
-    // Show user's question
-    chat.innerHTML += `<div class="mt-4 text-orange-400">You: ${input.value}</div>`;
+            chat.innerHTML += `<div class="mt-4 text-orange-400">You: ${input.value}</div>`;
 
-    setTimeout(() => {
-        let reply = "AI Coach: I can help with pricing, scheduling, materials, labor rates, and local Carbon County advice. What do you need?";
+            setTimeout(() => {
+                let reply = "AI Coach: I can help with pricing, scheduling, materials, labor rates, and local Carbon County advice.";
 
-        // Deck pricing & building
-        if (q.includes("deck") || q.includes("porch")) {
-            if (q.includes("price") || q.includes("cost") || q.includes("how much")) {
-                reply = "AI Coach: Composite decks run $92–$108/sq ft all-in. Pressure-treated is $65–$82/sq ft. 400 sq ft composite ≈ $38k–$43k.";
-            } else if (q.includes("build") || q.includes("how to")) {
-                reply = "AI Coach: Use 6x6 posts 8ft on center, 2x10 joists 16\" OC, and composite boards. Add 10% waste. Want a material list?";
-            } else {
-                reply = "AI Coach: 400 sq ft composite deck usually costs $38k–$43k and takes 4–6 days with 2 guys.";
-            }
+                if (q.includes("deck") || q.includes("porch")) {
+                    if (q.includes("price") || q.includes("cost") || q.includes("how much") || q.includes("38k") || q.includes("high")) {
+                        reply = "AI Coach: 400 sq ft composite deck usually costs $38k–$43k. $92–$108/sq ft all-in is normal. 35% margin after materials & labor.";
+                    } else if (q.includes("build") || q.includes("how to")) {
+                        reply = "AI Coach: Use 6x6 posts 8ft on center, 2x10 joists 16\" OC. Add 10% waste. Want a full material list?";
+                    } else {
+                        reply = "AI Coach: 400 sq ft composite deck ≈ $38k–$43k and takes 4–6 days with 2 guys.";
+                    }
+                } else if (q.includes("fence") || q.includes("fencing") || q.includes("100 ft")) {
+                    reply = "AI Coach: 100 ft of 6ft vinyl privacy fence usually runs $4,800–$6,500 installed. Wood is $3,200–$4,500.";
+                } else if (q.includes("labor") || q.includes("hour") || q.includes("$65")) {
+                    reply = "AI Coach: I charge $65/hr per man. Two-man crew = $130/hr. Add 35% markup on materials.";
+                } else if (q.includes("time") || q.includes("clock") || q.includes("when") || q.includes("schedule")) {
+                    reply = "AI Coach: It’s contractor o’clock 💪 Best time to start decks is 7–8am. What job are you working on today?";
+                } else {
+                    reply = "AI Coach: For most decks I recommend $92–$108/sq ft. Add 10% waste + 35% margin after labor. Need help with a specific job?";
+                }
+
+                chat.innerHTML += `<div class="mt-2 text-emerald-400">${reply}</div>`;
+                chat.scrollTop = chat.scrollHeight;
+            }, 650);
+
+            input.value = '';
         }
 
-        // Fencing
-        else if (q.includes("fence") || q.includes("fencing")) {
-            reply = "AI Coach: Vinyl privacy fence runs $48–$65/linear ft installed. Wood is $32–$45. 6ft tall is standard in Carbon County.";
+        window.onload = function() {
+            // Uncomment the line below if you want it to auto-login for testing
+            // login();
         }
-
-        // Painting
-        else if (q.includes("paint") || q.includes("painting")) {
-            reply = "AI Coach: Interior paint jobs average $3.25–$4.75/sq ft. Exterior is $2.85–$4.25. Add $1.50/sq ft for prep work.";
-        }
-
-        // Labor rates
-        else if (q.includes("labor") || q.includes("rate") || q.includes("hour")) {
-            reply = "AI Coach: I charge $65/hr per man. Two-man crew is $130/hr. Add 35% markup on materials for profit.";
-        }
-
-        // Scheduling
-        else if (q.includes("schedule") || q.includes("when") || q.includes("time")) {
-            reply = "AI Coach: Best time to start decks is early morning (7–8am) so you finish before the heat. Avoid booking more than 2 big jobs per week.";
-        }
-
-        // Materials / sourcing
-        else if (q.includes("material") || q.includes("buy") || q.includes("where")) {
-            reply = "AI Coach: Lowe’s Lehighton has the best prices on composite. 903 Landscape Supply is good for pavers and mulch. Call ahead for delivery.";
-        }
-
-        // Quotes
-        else if (q.includes("quote") || q.includes("estimate")) {
-            reply = "AI Coach: Always add 10% contingency + 15% profit margin. Send quotes within 24 hours while the lead is hot.";
-        }
-
-        // General pricing
-        else if (q.includes("price") || q.includes("cost") || q.includes("how much")) {
-            reply = "AI Coach: Most jobs I price at $92–$108/sq ft for decks, $48–$65/lf for fencing, and $3.25–$4.75/sq ft for painting.";
-        }
-
-        // Time-related (fix for "what time is it")
-        else if (q.includes("time") || q.includes("clock") || q.includes("hour")) {
-            reply = "AI Coach: It’s contractor o’clock — time to go make money 💪 What job are you working on today?";
-        }
-
-        // Default helpful response
-        else {
-            reply = "AI Coach: For decks I recommend $92–$108/sq ft. Add 10% waste on materials and 35% margin after labor. Need help with a specific job?";
-        }
-
-        chat.innerHTML += `<div class="mt-2 text-emerald-400">${reply}</div>`;
-        chat.scrollTop = chat.scrollHeight;
-    }, 650);
-
-    input.value = '';
-}
-</script>
+    </script>
+</body>
+</html>
