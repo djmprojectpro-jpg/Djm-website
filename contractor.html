@@ -3,111 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contractor Portal • DJM Project Pro's</title>
+    <title>Contractor Portal • DJM</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style> .panel { display: none; } .panel.active { display: block; } </style>
 </head>
-<body class="bg-[#0A0A0A] text-white min-h-screen font-sans">
-    <div class="max-w-6xl mx-auto p-4">
-        <header class="flex justify-between items-center mb-6">
-            <h1 class="text-3xl font-bold">DJM Contractor Portal</h1>
-            <button onclick="logout()" class="px-5 py-2 bg-red-600 rounded-full">Logout</button>
-        </header>
+<body class="bg-black text-white p-6">
+    <h1 class="text-3xl font-bold mb-6">Contractor Portal • DJM Project Pro's</h1>
+    
+    <button onclick="login()" class="w-full bg-orange-600 py-4 text-xl font-bold rounded-3xl mb-8">LOG IN AS DYLAN</button>
 
-        <!-- Login -->
-        <div id="loginScreen" class="max-w-sm mx-auto bg-zinc-900 p-8 rounded-3xl text-center">
-            <h2 class="text-2xl font-bold mb-6">Welcome back, Dylan 👷‍♂️</h2>
-            <button onclick="login()" class="w-full bg-orange-600 hover:bg-orange-500 py-5 text-xl font-bold rounded-3xl">
-                LOG IN • Start 7-Day Free Trial
-            </button>
-            <p class="text-xs text-zinc-400 mt-4">After trial: $29/mo (billed yearly)</p>
+    <div id="dash" class="hidden">
+        <div class="flex gap-3 mb-6 border-b pb-3">
+            <button onclick="tab(1)" class="flex-1 py-3 bg-zinc-800">Overview</button>
+            <button onclick="tab(2)" class="flex-1 py-3 bg-zinc-800">Quotes</button>
+            <button onclick="tab(3)" class="flex-1 py-3 bg-zinc-800">Jobs</button>
         </div>
 
-        <!-- Dashboard -->
-        <div id="dashboard" class="hidden">
-            <!-- Tabs -->
-            <div class="flex overflow-x-auto border-b border-zinc-700 mb-4 text-sm">
-                <button onclick="openTab(0)" class="tab-btn active px-6 py-3 border-b-2 border-orange-500 font-semibold">Overview</button>
-                <button onclick="openTab(1)" class="tab-btn px-6 py-3">Quotes</button>
-                <button onclick="openTab(2)" class="tab-btn px-6 py-3">Jobs</button>
-                <button onclick="openTab(3)" class="tab-btn px-6 py-3">AI Coach</button>
-            </div>
+        <button onclick="addRow()" class="block w-full bg-orange-600 py-5 text-xl rounded-3xl">Create New Quote → Adds Row Below ✅</button>
+        <table class="w-full mt-6 border"><tbody id="list"></tbody></table>
 
-            <!-- Overview -->
-            <div id="tab-0" class="panel active">
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-6">
-                    <div onclick="fakeUpdate(this)" class="bg-zinc-800 p-4 rounded-3xl cursor-pointer"><div class="text-4xl font-bold text-orange-500">14</div><div>Active Jobs</div></div>
-                    <div onclick="fakeUpdate(this)" class="bg-zinc-800 p-4 rounded-3xl cursor-pointer"><div class="text-4xl font-bold text-emerald-500">8</div><div>New Quotes Today</div></div>
-                    <div class="bg-zinc-800 p-4 rounded-3xl">$47,200 <span class="text-xs text-emerald-400">Pipeline ↑</span></div>
-                    <button onclick="createNewQuote()" class="bg-orange-600 py-4 rounded-3xl font-bold">+ New Quote</button>
-                </div>
-                <button onclick="showToast('📊 Report generated!')" class="block w-full bg-zinc-700 py-3 rounded-3xl">Generate Weekly Report</button>
-            </div>
-
-            <!-- Quotes Tab -->
-            <div id="tab-1" class="panel">
-                <button onclick="showQuoteForm()" class="mb-3 bg-orange-600 px-6 py-3 rounded-3xl">Create New Quote Form</button>
-                <div id="quoteForm" class="hidden bg-zinc-800 p-4 rounded-3xl mb-4">
-                    <input id="clientName" placeholder="Client Name" class="w-full mb-2 p-3 bg-zinc-900 rounded-2xl">
-                    <input id="projectType" placeholder="Project (e.g. Deck 20x30)" class="w-full mb-2 p-3 bg-zinc-900 rounded-2xl">
-                    <button onclick="submitQuoteDemo()" class="w-full bg-emerald-600 py-3 rounded-3xl">Send Quote & Add to List</button>
-                </div>
-                <table class="w-full text-left">
-                    <thead><tr class="border-b"><th class="py-2">Client</th><th>Project</th><th>Status</th></tr></thead>
-                    <tbody id="quotesBody">
-                        <tr><td class="py-2">John Smith</td><td>Deck 20x30</td><td class="text-yellow-400">Quoted</td></tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <!-- Jobs Tab -->
-            <div id="tab-2" class="panel">
-                <div class="space-y-3">
-                    <div class="bg-zinc-800 p-4 rounded-3xl flex justify-between items-center">
-                        <div>📍 123 Maple St • Deck Build</div>
-                        <button onclick="completeThisJob(this)" class="bg-emerald-600 px-5 py-1 rounded-full text-sm">Mark Complete ✅</button>
-                    </div>
-                    <button onclick="addNewJobCard()" class="w-full border border-dashed border-zinc-400 py-4 rounded-3xl">+ Add New Job Card</button>
-                </div>
-            </div>
-
-            <!-- AI Coach -->
-            <div id="tab-3" class="panel">
-                <div class="bg-zinc-800 rounded-3xl p-4 min-h-[260px]" id="aiChat">
-                    <div class="text-emerald-400">AI Coach: Hi Dylan! What do you need help with today?</div>
-                </div>
-                <div class="flex mt-3 gap-2">
-                    <input id="aiInput" placeholder="How should I price this 400sqft deck?" class="flex-1 bg-zinc-900 p-3 rounded-2xl">
-                    <button onclick="sendToCoach()" class="bg-orange-600 px-8 rounded-2xl">Send</button>
-                </div>
-            </div>
-
-            <!-- Bottom Bar -->
-            <div class="fixed bottom-4 left-1/2 -translate-x-1/2 bg-zinc-900 border border-orange-600 rounded-3xl flex gap-1 p-1 shadow-2xl">
-                <button onclick="openTab(1)" class="px-6 py-3">📝 Quotes</button>
-                <button onclick="openTab(2)" class="px-6 py-3">🛠 Jobs</button>
-                <button onclick="openTab(3)" class="px-6 py-3 bg-orange-600 rounded-3xl">🤖 AI Coach</button>
-                <button onclick="showToast('✅ Everything saved!')" class="px-6 py-3">💾 Save</button>
-            </div>
-        </div>
+        <button onclick="aiSpeak()" class="block w-full bg-emerald-600 py-5 text-xl rounded-3xl mt-6">Ask AI Coach → See Answer Below ✅</button>
+        <div id="aiText" class="mt-4 text-emerald-400"></div>
     </div>
 
     <script>
-        function login(){ 
-            document.getElementById('loginScreen').classList.add('hidden');
-            document.getElementById('dashboard').classList.remove('hidden');
-            openTab(0);
+        function login() {
+            document.getElementById('dash').classList.remove('hidden');
+            tab(1);
         }
-        function logout(){ location.reload(); }
-        function openTab(n){
-            document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
-            document.getElementById('tab-'+n).classList.add('active');
-            document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active','border-b-2','border-orange-500'));
-            document.querySelectorAll('.tab-btn')[n].classList.add('active','border-b-2','border-orange-500');
+        function tab(n) {
+            alert('Tab ' + n + ' loaded ✅');
         }
-        function createNewQuote(){ showToast('📋 New quote form opened'); showQuoteForm(); openTab(1); }
-        function showQuoteForm(){ document.getElementById('quoteForm').classList.toggle('hidden'); }
-        function submitQuoteDemo(){
-            const name = document.getElementById('clientName').value || "Sarah Johnson";
-            const proj = document.getElementById('projectType').value || "Bathroom Remodel";
-            const row = `<tr><td class="py-2">\( {name}</td><td> \){proj}</td><td class="text-emerald-400">Sent ✓
+        function addRow() {
+            const row = document.createElement('tr');
+            row.innerHTML = '<td class="border p-3">New Customer • Roof Repair • $6,200</td>';
+            document.getElementById('list').appendChild(row);
+        }
+        function aiSpeak() {
+            document.getElementById('aiText').innerHTML = '🤖 AI Coach: Price it at $6,200. Schedule next week? (Message appears on page)';
+        }
+    </script>
+</body>
+</html>
