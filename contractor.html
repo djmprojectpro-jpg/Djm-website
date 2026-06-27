@@ -5,228 +5,319 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contractor Portal • DJM Project Pro's</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body { background: #0A0A0A; color: white; }
-        .tab-active { background: #FF6B00; color: white; border-radius: 9999px; }
-        .panel { display: none; }
-        .panel.active { display: block; }
-        .toast { position:fixed; bottom:20px; left:50%; transform:translateX(-50%); background:#22c55e; color:black; padding:12px 24px; border-radius:9999px; font-weight:600; z-index:9999; }
-    </style>
 </head>
-<body class="p-4 max-w-5xl mx-auto">
-    <div class="flex justify-between items-center mb-6">
-        <div>
-            <h1 class="text-3xl font-bold">Contractor Portal</h1>
-            <p class="text-orange-500 text-sm">DJM Project Pro's • Carbon County, PA</p>
-        </div>
-        <button onclick="logout()" class="px-5 py-2 bg-zinc-800 rounded-full text-sm">Logout</button>
-    </div>
+<body class="bg-[#0A0A0A] text-white">
 
-    <!-- LOGIN -->
-    <div id="loginScreen" class="max-w-sm mx-auto text-center mt-12">
-        <div class="bg-zinc-900 rounded-3xl p-8">
-            <h2 class="text-2xl font-bold mb-2">Welcome back, Dylan</h2>
+    <!-- Navbar -->
+    <nav class="bg-black border-b border-zinc-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center gap-x-3">
+                    <div class="w-11 h-11 bg-orange-600 rounded-full flex items-center justify-center">
+                        <span class="text-white font-bold text-2xl">D</span>
+                    </div>
+                    <div>
+                        <div class="font-bold text-2xl tracking-tighter">DJM Project Pro's</div>
+                        <div class="text-[10px] text-orange-500 font-medium -mt-1 tracking-[1.5px]">Contractor Portal</div>
+                    </div>
+                </div>
+                <button onclick="logout()" class="px-5 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-full text-sm">Logout</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Login Screen -->
+    <div id="loginScreen" class="max-w-sm mx-auto mt-16 text-center">
+        <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-10">
+            <h1 class="text-3xl font-bold mb-2">Welcome back, Dylan</h1>
             <p class="text-zinc-400 mb-8">DJM Project Pro's Contractor Tools</p>
-            <button onclick="login()" class="w-full bg-orange-600 hover:bg-orange-500 py-5 text-xl font-bold rounded-3xl">LOG IN AS DYLAN</button>
+            
+            <button onclick="login()" 
+                    class="w-full bg-gradient-to-r from-orange-600 to-orange-500 py-5 text-xl font-bold rounded-3xl">
+                LOG IN AS DYLAN
+            </button>
             <p class="text-xs text-zinc-500 mt-4">7-day free trial • $29/mo after</p>
         </div>
     </div>
 
-    <!-- DASHBOARD -->
-    <div id="dashboard" class="hidden">
-        <div class="flex justify-between items-center mb-4">
-            <div><span class="text-xl font-semibold">Hi Dylan 👋</span> <span class="text-emerald-400 text-sm ml-2">● Online</span></div>
+    <!-- Dashboard -->
+    <div id="dashboard" class="hidden max-w-6xl mx-auto px-6 pb-20">
+        
+        <!-- Header -->
+        <div class="flex justify-between items-center my-8">
+            <div>
+                <h1 class="text-3xl font-bold">Dashboard</h1>
+                <p class="text-zinc-400">Welcome back, Dylan 👋</p>
+            </div>
+            <div class="text-right">
+                <div class="text-emerald-400 text-sm">● Online</div>
+                <div class="text-xs text-zinc-500">Carbon County, PA</div>
+            </div>
         </div>
 
         <!-- Tabs -->
-        <div class="flex bg-zinc-900 rounded-3xl p-1 mb-5 text-sm">
-            <button onclick="showTab(0)" class="tab-btn flex-1 py-3 rounded-3xl font-semibold tab-active" id="tab0">Overview</button>
-            <button onclick="showTab(1)" class="tab-btn flex-1 py-3 rounded-3xl font-semibold" id="tab1">Quotes</button>
-            <button onclick="showTab(2)" class="tab-btn flex-1 py-3 rounded-3xl font-semibold" id="tab2">Jobs</button>
-            <button onclick="showTab(3)" class="tab-btn flex-1 py-3 rounded-3xl font-semibold" id="tab3">AI Coach</button>
+        <div class="flex bg-zinc-900 rounded-3xl p-1 mb-6 text-sm w-fit">
+            <button onclick="showTab(0)" class="tab-btn px-8 py-3 rounded-3xl font-semibold active" id="tab0">Overview</button>
+            <button onclick="showTab(1)" class="tab-btn px-8 py-3 rounded-3xl font-semibold" id="tab1">Quotes</button>
+            <button onclick="showTab(2)" class="tab-btn px-8 py-3 rounded-3xl font-semibold" id="tab2">Jobs</button>
+            <button onclick="showTab(3)" class="tab-btn px-8 py-3 rounded-3xl font-semibold" id="tab3">AI Coach</button>
         </div>
 
-        <!-- OVERVIEW -->
-        <div id="panel-0" class="panel active">
-            <div class="grid grid-cols-2 gap-3 mb-5">
-                <div class="bg-zinc-900 rounded-3xl p-4"><div class="text-4xl font-bold text-orange-500">14</div><div class="text-sm">Active Jobs</div></div>
-                <div class="bg-zinc-900 rounded-3xl p-4"><div class="text-4xl font-bold text-emerald-400">8</div><div class="text-sm">New Quotes Today</div></div>
+        <!-- Overview Tab -->
+        <div id="panel-0" class="tab-panel">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-8">
+                <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-7">
+                    <div class="text-5xl font-bold text-orange-500">14</div>
+                    <div class="text-zinc-400 mt-1">Active Jobs</div>
+                </div>
+                <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-7">
+                    <div class="text-5xl font-bold text-emerald-400">8</div>
+                    <div class="text-zinc-400 mt-1">New Quotes Today</div>
+                </div>
+                <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-7">
+                    <div class="text-3xl font-bold">$47,800</div>
+                    <div class="text-zinc-400 mt-1">Pipeline this month ↑ 22%</div>
+                </div>
             </div>
-            <button onclick="showTab(1)" class="w-full bg-orange-600 py-4 rounded-3xl font-bold">+ Create New Quote</button>
+            
+            <button onclick="showTab(1)" 
+                    class="bg-orange-600 hover:bg-orange-500 px-8 py-4 rounded-3xl font-bold text-lg">
+                + Create New Quote
+            </button>
         </div>
 
-        <!-- QUOTES -->
-        <div id="panel-1" class="panel">
-            <button onclick="showQuoteForm()" class="w-full bg-orange-600 py-4 rounded-3xl font-bold mb-4">+ Create New Quote</button>
-            
-            <div id="quoteForm" class="hidden bg-zinc-900 rounded-3xl p-4 mb-4">
-                <input id="clientName" placeholder="Client name" class="w-full bg-black border border-zinc-700 rounded-2xl px-4 py-3 mb-3">
-                <input id="projectDesc" placeholder="Project description" class="w-full bg-black border border-zinc-700 rounded-2xl px-4 py-3 mb-3">
-                <input id="quoteAmount" placeholder="Amount $" class="w-full bg-black border border-zinc-700 rounded-2xl px-4 py-3 mb-4">
-                <div class="flex gap-3">
-                    <button onclick="submitQuote()" class="flex-1 bg-emerald-600 py-3 rounded-3xl font-bold">Send Quote</button>
-                    <button onclick="hideQuoteForm()" class="flex-1 bg-zinc-700 py-3 rounded-3xl">Cancel</button>
+        <!-- Quotes Tab -->
+        <div id="panel-1" class="tab-panel hidden">
+            <button onclick="showQuoteForm()" 
+                    class="mb-6 bg-orange-600 hover:bg-orange-500 px-8 py-4 rounded-3xl font-bold text-lg">
+                + Create New Quote
+            </button>
+
+            <!-- Quote Form -->
+            <div id="quoteForm" class="hidden bg-zinc-900 border border-zinc-800 rounded-3xl p-8 mb-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Client Name</label>
+                        <input id="clientName" type="text" class="w-full bg-black border border-zinc-700 rounded-2xl px-6 py-4 text-lg" placeholder="John Smith">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">Project</label>
+                        <input id="projectType" type="text" class="w-full bg-black border border-zinc-700 rounded-2xl px-6 py-4 text-lg" placeholder="Deck 20x30 Composite">
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold mb-2">Amount ($)</label>
+                    <input id="quoteAmount" type="text" class="w-full bg-black border border-zinc-700 rounded-2xl px-6 py-4 text-lg" placeholder="12500">
+                </div>
+                <div class="flex gap-4">
+                    <button onclick="submitQuote()" class="flex-1 bg-emerald-600 hover:bg-emerald-500 py-4 rounded-3xl font-bold">Save Quote</button>
+                    <button onclick="hideQuoteForm()" class="flex-1 bg-zinc-700 hover:bg-zinc-600 py-4 rounded-3xl font-bold">Cancel</button>
                 </div>
             </div>
 
-            <div class="bg-zinc-900 rounded-3xl p-4">
-                <div class="font-semibold mb-3">Recent Quotes (saved)</div>
-                <table class="w-full text-sm">
-                    <thead><tr class="border-b border-zinc-700"><th class="text-left py-2">Client</th><th class="text-left py-2">Project</th><th class="text-right py-2">Amount</th><th></th></tr></thead>
-                    <tbody id="quotesTable"></tbody>
-                </table>
+            <!-- Quotes List -->
+            <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-8">
+                <h3 class="font-bold text-xl mb-5">Recent Quotes</h3>
+                <div id="quotesList" class="space-y-4"></div>
             </div>
         </div>
 
-        <!-- JOBS -->
-        <div id="panel-2" class="panel">
-            <button onclick="addNewJob()" class="w-full bg-orange-600 py-4 rounded-3xl font-bold mb-4">+ Add New Job</button>
-            <div id="jobsList" class="space-y-3"></div>
+        <!-- Jobs Tab -->
+        <div id="panel-2" class="tab-panel hidden">
+            <button onclick="addNewJob()" 
+                    class="mb-6 bg-orange-600 hover:bg-orange-500 px-8 py-4 rounded-3xl font-bold text-lg">
+                + Add New Job
+            </button>
+            
+            <div id="jobsList" class="space-y-4"></div>
         </div>
 
-        <!-- AI COACH -->
-        <div id="panel-3" class="panel">
-            <div class="bg-zinc-900 rounded-3xl p-4 mb-4 min-h-[220px]" id="aiChat">
-                <div class="text-emerald-400 text-sm">AI Coach: Hi Dylan! Ask me about pricing, scheduling, materials, etc.</div>
+        <!-- AI Coach Tab -->
+        <div id="panel-3" class="tab-panel hidden">
+            <div class="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 mb-6 min-h-[280px]" id="aiChat">
+                <div class="text-emerald-400">AI Coach: Hi Dylan! What do you need help with today? (pricing, scheduling, materials, etc.)</div>
             </div>
-            <div class="flex gap-2">
-                <input id="aiInput" placeholder="How do I price a 20x30 composite deck?" class="flex-1 bg-zinc-900 border border-zinc-700 rounded-3xl px-4 py-3 text-sm">
-                <button onclick="askAI()" class="bg-orange-600 px-8 rounded-3xl font-bold">Send</button>
+            
+            <div class="flex gap-3">
+                <input id="aiInput" type="text" placeholder="How should I price a 400 sq ft composite deck?" 
+                       class="flex-1 bg-zinc-900 border border-zinc-700 rounded-3xl px-6 py-4 text-lg">
+                <button onclick="askAI()" 
+                        class="bg-orange-600 hover:bg-orange-500 px-10 rounded-3xl font-bold">Ask</button>
             </div>
         </div>
-        <div class="h-20"></div>
+
     </div>
 
     <script>
-        // ========== PERSISTENCE (localStorage) ==========
+        // Login
+        function login() {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('dashboard').classList.remove('hidden');
+            loadQuotes();
+            loadJobs();
+            showTab(0);
+        }
+
+        function logout() {
+            location.reload();
+        }
+
+        // Tabs
+        function showTab(n) {
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.add('hidden'));
+            document.getElementById('panel-' + n).classList.remove('hidden');
+            
+            document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+                btn.classList.toggle('bg-orange-600', i === n);
+                btn.classList.toggle('text-white', i === n);
+            });
+        }
+
+        // Quotes
         let quotes = [];
-        let jobs = [];
+
+        function loadQuotes() {
+            const saved = localStorage.getItem('djm_quotes');
+            if (saved) quotes = JSON.parse(saved);
+            renderQuotes();
+        }
 
         function saveQuotes() {
             localStorage.setItem('djm_quotes', JSON.stringify(quotes));
         }
-        function loadQuotes() {
-            const saved = localStorage.getItem('djm_quotes');
-            if (saved) quotes = JSON.parse(saved);
-        }
+
         function renderQuotes() {
-            const tbody = document.getElementById('quotesTable');
-            tbody.innerHTML = '';
-            quotes.forEach((q, index) => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td class="py-2">${q.name}</td>
-                    <td class="py-2">${q.desc}</td>
-                    <td class="py-2 text-right">$${q.amount}</td>
-                    <td class="py-2 text-emerald-400 text-xs">SENT ✓</td>
-                `;
-                tbody.appendChild(row);
-            });
-        }
-        function saveJobs() {
-            localStorage.setItem('djm_jobs', JSON.stringify(jobs));
-        }
-        function loadJobs() {
-            const saved = localStorage.getItem('djm_jobs');
-            if (saved) jobs = JSON.parse(saved);
-        }
-        function renderJobs() {
-            const container = document.getElementById('jobsList');
+            const container = document.getElementById('quotesList');
             container.innerHTML = '';
-            jobs.forEach((job, index) => {
+            
+            if (quotes.length === 0) {
+                container.innerHTML = '<p class="text-zinc-400">No quotes yet. Create one above!</p>';
+                return;
+            }
+            
+            quotes.forEach((q, index) => {
                 const div = document.createElement('div');
-                div.className = "bg-zinc-900 rounded-3xl p-4 flex justify-between items-center";
+                div.className = 'bg-zinc-800 rounded-2xl p-5 flex justify-between items-center';
                 div.innerHTML = `
                     <div>
-                        <div class="font-semibold">${job.title}</div>
-                        <div class="text-xs text-zinc-400">${job.status}</div>
+                        <div class="font-semibold">${q.client}</div>
+                        <div class="text-sm text-zinc-400">${q.project} • $${q.amount}</div>
                     </div>
-                    <button onclick="completeJob(this, ${index})" class="bg-emerald-600 px-5 py-1.5 rounded-full text-sm font-semibold">Mark Complete</button>
+                    <div class="text-emerald-400 text-sm font-semibold">SAVED</div>
                 `;
                 container.appendChild(div);
             });
         }
 
-        // ========== LOGIN / TABS ==========
-        function login() {
-            document.getElementById('loginScreen').classList.add('hidden');
-            document.getElementById('dashboard').classList.remove('hidden');
-            loadQuotes(); renderQuotes();
-            loadJobs(); renderJobs();
-            showTab(0);
-        }
-        function logout() { location.reload(); }
-        function showTab(n) {
-            document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
-            document.getElementById('panel-' + n).classList.add('active');
-            document.querySelectorAll('.tab-btn').forEach((btn, i) => btn.classList.toggle('tab-active', i === n));
-        }
-
-        // ========== QUOTE FORM ==========
         function showQuoteForm() {
             document.getElementById('quoteForm').classList.remove('hidden');
-            document.getElementById('clientName').focus();
+            showTab(1);
         }
+
         function hideQuoteForm() {
             document.getElementById('quoteForm').classList.add('hidden');
         }
+
         function submitQuote() {
-            const name = document.getElementById('clientName').value || "New Client";
-            const desc = document.getElementById('projectDesc').value || "Project";
+            const client = document.getElementById('clientName').value || "New Client";
+            const project = document.getElementById('projectType').value || "Project";
             const amount = document.getElementById('quoteAmount').value || "0";
 
-            quotes.unshift({ name, desc, amount, status: "SENT" });
+            quotes.unshift({ client, project, amount });
             saveQuotes();
             renderQuotes();
-
             hideQuoteForm();
-            showToast("✅ Quote saved & added!");
 
+            // Clear form
             document.getElementById('clientName').value = '';
-            document.getElementById('projectDesc').value = '';
+            document.getElementById('projectType').value = '';
             document.getElementById('quoteAmount').value = '';
+
+            alert("✅ Quote saved successfully!");
         }
 
-        // ========== JOBS ==========
+        // Jobs
+        let jobs = [];
+
+        function loadJobs() {
+            const saved = localStorage.getItem('djm_jobs');
+            if (saved) jobs = JSON.parse(saved);
+            renderJobs();
+        }
+
+        function saveJobs() {
+            localStorage.setItem('djm_jobs', JSON.stringify(jobs));
+        }
+
+        function renderJobs() {
+            const container = document.getElementById('jobsList');
+            container.innerHTML = '';
+
+            if (jobs.length === 0) {
+                container.innerHTML = '<p class="text-zinc-400">No jobs yet. Add one above!</p>';
+                return;
+            }
+
+            jobs.forEach((job, index) => {
+                const div = document.createElement('div');
+                div.className = 'bg-zinc-900 border border-zinc-800 rounded-3xl p-6 flex justify-between items-center';
+                div.innerHTML = `
+                    <div>
+                        <div class="font-semibold">${job.title}</div>
+                        <div class="text-sm text-zinc-400">${job.status}</div>
+                    </div>
+                    <button onclick="completeJob(${index}, this)" 
+                            class="bg-emerald-600 hover:bg-emerald-500 px-6 py-2 rounded-full text-sm font-semibold">
+                        Mark Complete
+                    </button>
+                `;
+                container.appendChild(div);
+            });
+        }
+
         function addNewJob() {
-            jobs.unshift({ title: "New Job • " + new Date().toLocaleDateString(), status: "Ready to start" });
+            const title = prompt("Job title?", "New Job - " + new Date().toLocaleDateString());
+            if (!title) return;
+
+            jobs.unshift({ title, status: "Ready to start" });
             saveJobs();
             renderJobs();
-            showToast("🛠 New job added!");
-        }
-        function completeJob(btn, index) {
-            jobs[index].status = "Completed";
-            saveJobs();
-            renderJobs();
-            showToast("🎉 Job completed!");
         }
 
-        // ========== AI COACH ==========
+        function completeJob(index, btn) {
+            jobs[index].status = "Completed ✅";
+            saveJobs();
+            renderJobs();
+        }
+
+        // AI Coach
         function askAI() {
             const input = document.getElementById('aiInput');
             const chat = document.getElementById('aiChat');
-            const q = input.value.trim() || "Pricing help";
-            chat.innerHTML += `<div class="mt-3 text-right text-orange-400">You: ${q}</div>`;
+            const q = input.value.trim();
+            if (!q) return;
+
+            chat.innerHTML += `<div class="mt-4 text-orange-400">You: ${q}</div>`;
+
             setTimeout(() => {
                 let reply = "AI Coach: For most decks I recommend $92–$108/sq ft. 35% margin after materials & labor.";
-                if (q.toLowerCase().includes("deck")) reply = "AI Coach: 400 sq ft composite deck ≈ $38k. Schedule it for next week?";
-                chat.innerHTML += `<div class="mt-2 text-emerald-400">${reply}</div>`;
-            }, 600);
-            input.value = '';
-            showToast("🤖 AI replied");
-        }
+                if (q.toLowerCase().includes("deck")) {
+                    reply = "AI Coach: 400 sq ft composite deck ≈ $38k. Schedule it for next week?";
+                } else if (q.toLowerCase().includes("price")) {
+                    reply = "AI Coach: Price 15-20% above material cost + $65/hr labor. Add 10% contingency.";
+                }
 
-        function showToast(msg) {
-            const t = document.createElement('div');
-            t.className = 'toast';
-            t.textContent = msg;
-            document.body.appendChild(t);
-            setTimeout(() => t.remove(), 2200);
+                chat.innerHTML += `<div class="mt-2 text-emerald-400">${reply}</div>`;
+                chat.scrollTop = chat.scrollHeight;
+            }, 700);
+
+            input.value = '';
         }
 
         // Init
         window.onload = function() {
-            document.getElementById('dashboard').classList.add('hidden');
+            // Auto-login for testing (remove in production if needed)
+            // login();
         }
     </script>
 </body>
