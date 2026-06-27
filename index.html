@@ -1,61 +1,59 @@
-<!-- ==================== QUOTE FORM (REAL EMAILJS) ==================== -->
-<section id="quote" class="max-w-3xl mx-auto px-6 py-16">
+<!-- ==================== IMPROVED QUOTE FORM ==================== -->
+<section id="quote" class="max-w-3xl mx-auto px-6 py-16 bg-[#0A0A0A]">
     <div class="text-center mb-10">
-        <h2 class="text-4xl font-bold tracking-tighter">Get Your Free Quote</h2>
-        <p class="text-zinc-400 mt-2">Licensed &amp; insured • Fast response within 2 hours</p>
+        <h2 class="text-4xl md:text-5xl font-bold tracking-tighter">Get Your Free Quote</h2>
+        <p class="text-zinc-400 mt-3 text-lg">Licensed &amp; insured • Fast response within 2 hours</p>
     </div>
 
     <form id="quoteForm" onsubmit="sendRealQuote(event)" 
-          class="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 space-y-5">
+          class="bg-zinc-900 border border-zinc-800 rounded-3xl p-8 md:p-10 space-y-6">
         
+        <!-- Name + Phone row -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <!-- Name -->
             <div>
-                <label class="block text-sm font-medium mb-1.5">Full Name</label>
+                <label class="block text-sm font-semibold mb-2 text-zinc-300">Full Name</label>
                 <input type="text" id="name" name="name" required
-                       class="w-full bg-black border border-zinc-700 rounded-2xl px-5 py-3.5 focus:outline-none focus:border-orange-500"
+                       class="w-full bg-black border border-zinc-700 focus:border-orange-500 rounded-2xl px-6 py-4 text-lg placeholder:text-zinc-500"
                        placeholder="John Smith">
             </div>
             
-            <!-- Phone -->
             <div>
-                <label class="block text-sm font-medium mb-1.5">Phone Number</label>
+                <label class="block text-sm font-semibold mb-2 text-zinc-300">Phone Number</label>
                 <input type="tel" id="phone" name="phone" required
-                       class="w-full bg-black border border-zinc-700 rounded-2xl px-5 py-3.5 focus:outline-none focus:border-orange-500"
+                       class="w-full bg-black border border-zinc-700 focus:border-orange-500 rounded-2xl px-6 py-4 text-lg placeholder:text-zinc-500"
                        placeholder="(272) 394-5428">
             </div>
         </div>
 
         <!-- Email -->
         <div>
-            <label class="block text-sm font-medium mb-1.5">Email Address</label>
+            <label class="block text-sm font-semibold mb-2 text-zinc-300">Email Address</label>
             <input type="email" id="email" name="email" required
-                   class="w-full bg-black border border-zinc-700 rounded-2xl px-5 py-3.5 focus:outline-none focus:border-orange-500"
+                   class="w-full bg-black border border-zinc-700 focus:border-orange-500 rounded-2xl px-6 py-4 text-lg placeholder:text-zinc-500"
                    placeholder="you@email.com">
         </div>
 
-        <!-- Project Type / Description -->
+        <!-- Project Details -->
         <div>
-            <label class="block text-sm font-medium mb-1.5">Project Details</label>
-            <textarea id="message" name="message" rows="4" required
-                      class="w-full bg-black border border-zinc-700 rounded-3xl px-5 py-4 focus:outline-none focus:border-orange-500 resize-y"
-                      placeholder="Deck 20x30, composite, Lehighton area... or describe your project"></textarea>
+            <label class="block text-sm font-semibold mb-2 text-zinc-300">Project Details</label>
+            <textarea id="message" name="message" rows="5" required
+                      class="w-full bg-black border border-zinc-700 focus:border-orange-500 rounded-3xl px-6 py-5 text-lg placeholder:text-zinc-500 resize-y"
+                      placeholder="Deck 20x30 composite in Lehighton, or describe your project..."></textarea>
         </div>
 
         <!-- Submit Button -->
         <button type="submit" id="submitBtn"
-                class="w-full bg-gradient-to-r from-orange-600 to-orange-500 hover:from-orange-500 hover:to-orange-600 active:scale-[0.985] transition-all py-5 text-xl font-bold rounded-3xl shadow-lg">
+                class="w-full bg-gradient-to-r from-[#FF6B00] to-[#FF5E00] hover:brightness-110 active:scale-[0.985] transition-all py-6 text-2xl font-bold rounded-3xl shadow-xl mt-2">
             Send Quote Request
         </button>
 
-        <p class="text-center text-xs text-zinc-500">We’ll reply within 2 hours • No obligation</p>
+        <p class="text-center text-sm text-zinc-500 pt-2">We’ll reply within 2 hours • No obligation</p>
     </form>
 </section>
 
-<!-- ==================== EMAILJS SCRIPT (put this once in <head> or before closing </body>) ==================== -->
+<!-- ==================== EMAILJS (only add once if not already there) ==================== -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 <script>
-  // Initialize EmailJS with your public key
   (function() {
     emailjs.init("UVm2jY2rw75Zv0pp");   // ← your public key
   })();
@@ -65,24 +63,38 @@
 
     const form = e.target;
     const btn = document.getElementById('submitBtn');
-    const originalBtnText = btn.innerHTML;
+    const originalText = btn.innerHTML;
 
-    // Loading state
     btn.innerHTML = "Sending...";
     btn.disabled = true;
 
-    // Send using your Service ID + Template ID
     emailjs.sendForm("service_u2hje9s", "template_xp9wml5", form)
-      .then(function() {
-        // Success
+      .then(() => {
         btn.innerHTML = "✅ Sent! We'll contact you soon";
         btn.style.background = "linear-gradient(to right, #22c55e, #16a34a)";
-        
-        // Show nice toast
+
         showToast("✅ Quote request sent to djmprojectpro@gmail.com");
 
-        // Reset form after short delay
         setTimeout(() => {
           form.reset();
-          btn.innerHTML = originalBtnText;
-          btn.disabled
+          btn.innerHTML = originalText;
+          btn.disabled = false;
+          btn.style.background = "";
+        }, 2300);
+      })
+      .catch((error) => {
+        console.error(error);
+        btn.innerHTML = "Try Again";
+        btn.disabled = false;
+        alert("Error sending. Please call or text (272) 394-5428 directly.");
+      });
+  }
+
+  function showToast(msg) {
+    const toast = document.createElement('div');
+    toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#22c55e;color:#000;padding:14px 28px;border-radius:9999px;font-weight:700;box-shadow:0 10px 15px rgb(0 0 0 / 0.3);z-index:99999';
+    toast.textContent = msg;
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2800);
+  }
+</script>
