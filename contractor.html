@@ -291,34 +291,79 @@
         }
 
         // AI Coach
-        function askAI() {
-            const input = document.getElementById('aiInput');
-            const chat = document.getElementById('aiChat');
-            const q = input.value.trim();
-            if (!q) return;
+        <script>
+function askAI() {
+    const input = document.getElementById('aiInput');
+    const chat = document.getElementById('aiChat');
+    const q = input.value.trim().toLowerCase();
+    if (!q) return;
 
-            chat.innerHTML += `<div class="mt-4 text-orange-400">You: ${q}</div>`;
+    // Show user's question
+    chat.innerHTML += `<div class="mt-4 text-orange-400">You: ${input.value}</div>`;
 
-            setTimeout(() => {
-                let reply = "AI Coach: For most decks I recommend $92–$108/sq ft. 35% margin after materials & labor.";
-                if (q.toLowerCase().includes("deck")) {
-                    reply = "AI Coach: 400 sq ft composite deck ≈ $38k. Schedule it for next week?";
-                } else if (q.toLowerCase().includes("price")) {
-                    reply = "AI Coach: Price 15-20% above material cost + $65/hr labor. Add 10% contingency.";
-                }
+    setTimeout(() => {
+        let reply = "AI Coach: I can help with pricing, scheduling, materials, labor rates, and local Carbon County advice. What do you need?";
 
-                chat.innerHTML += `<div class="mt-2 text-emerald-400">${reply}</div>`;
-                chat.scrollTop = chat.scrollHeight;
-            }, 700);
-
-            input.value = '';
+        // Deck pricing & building
+        if (q.includes("deck") || q.includes("porch")) {
+            if (q.includes("price") || q.includes("cost") || q.includes("how much")) {
+                reply = "AI Coach: Composite decks run $92–$108/sq ft all-in. Pressure-treated is $65–$82/sq ft. 400 sq ft composite ≈ $38k–$43k.";
+            } else if (q.includes("build") || q.includes("how to")) {
+                reply = "AI Coach: Use 6x6 posts 8ft on center, 2x10 joists 16\" OC, and composite boards. Add 10% waste. Want a material list?";
+            } else {
+                reply = "AI Coach: 400 sq ft composite deck usually costs $38k–$43k and takes 4–6 days with 2 guys.";
+            }
         }
 
-        // Init
-        window.onload = function() {
-            // Auto-login for testing (remove in production if needed)
-            // login();
+        // Fencing
+        else if (q.includes("fence") || q.includes("fencing")) {
+            reply = "AI Coach: Vinyl privacy fence runs $48–$65/linear ft installed. Wood is $32–$45. 6ft tall is standard in Carbon County.";
         }
-    </script>
-</body>
-</html>
+
+        // Painting
+        else if (q.includes("paint") || q.includes("painting")) {
+            reply = "AI Coach: Interior paint jobs average $3.25–$4.75/sq ft. Exterior is $2.85–$4.25. Add $1.50/sq ft for prep work.";
+        }
+
+        // Labor rates
+        else if (q.includes("labor") || q.includes("rate") || q.includes("hour")) {
+            reply = "AI Coach: I charge $65/hr per man. Two-man crew is $130/hr. Add 35% markup on materials for profit.";
+        }
+
+        // Scheduling
+        else if (q.includes("schedule") || q.includes("when") || q.includes("time")) {
+            reply = "AI Coach: Best time to start decks is early morning (7–8am) so you finish before the heat. Avoid booking more than 2 big jobs per week.";
+        }
+
+        // Materials / sourcing
+        else if (q.includes("material") || q.includes("buy") || q.includes("where")) {
+            reply = "AI Coach: Lowe’s Lehighton has the best prices on composite. 903 Landscape Supply is good for pavers and mulch. Call ahead for delivery.";
+        }
+
+        // Quotes
+        else if (q.includes("quote") || q.includes("estimate")) {
+            reply = "AI Coach: Always add 10% contingency + 15% profit margin. Send quotes within 24 hours while the lead is hot.";
+        }
+
+        // General pricing
+        else if (q.includes("price") || q.includes("cost") || q.includes("how much")) {
+            reply = "AI Coach: Most jobs I price at $92–$108/sq ft for decks, $48–$65/lf for fencing, and $3.25–$4.75/sq ft for painting.";
+        }
+
+        // Time-related (fix for "what time is it")
+        else if (q.includes("time") || q.includes("clock") || q.includes("hour")) {
+            reply = "AI Coach: It’s contractor o’clock — time to go make money 💪 What job are you working on today?";
+        }
+
+        // Default helpful response
+        else {
+            reply = "AI Coach: For decks I recommend $92–$108/sq ft. Add 10% waste on materials and 35% margin after labor. Need help with a specific job?";
+        }
+
+        chat.innerHTML += `<div class="mt-2 text-emerald-400">${reply}</div>`;
+        chat.scrollTop = chat.scrollHeight;
+    }, 650);
+
+    input.value = '';
+}
+</script>
