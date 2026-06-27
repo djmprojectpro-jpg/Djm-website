@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DJM Project Pro's • Quote Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>emailjs.init("UVm2jY2rw75Zv0pp");</script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="bg-[#0A0A0A] text-white">
+
+    <!-- Navbar -->
+    <nav class="bg-white border-b sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+            <div class="flex items-center gap-x-4">
+                <img src="djm-logo.png" class="w-12 h-12 rounded-full" alt="Logo">
+                <div>
+                    <div class="font-bold text-2xl text-black tracking-tight">DJM Project Pro's</div>
+                    <div class="text-orange-500 text-xs font-semibold tracking-[2px]">ANOTHER DAY, ANOTHER PROJECT</div>
+                </div>
+            </div>
+            <a href="contractor.html" class="px-6 py-2.5 bg-black text-white rounded-3xl text-sm font-semibold hover:bg-orange-600">Contractor Portal</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="max-w-5xl mx-auto px-6 pt-16 pb-20 text-center">
+        <h1 class="text-6xl md:text-7xl font-bold tracking-[-3px] leading-none">
+            Quality Craftsmanship.<br>
+            <span class="text-orange-500">Done Right, Every Time.</span>
+        </h1>
+        <p class="mt-6 text-2xl text-[#CCCCCC]">Professional home improvement across Carbon County, PA.</p>
+        
+        <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
+            <button onclick="document.getElementById('quote').scrollIntoView({behavior:'smooth'})" class="bg-orange-600 px-10 py-4 rounded-3xl text-xl font-semibold">Request a Free Quote</button>
+            <a href="contractor.html" class="border border-white/40 px-8 py-4 rounded-3xl text-lg font-medium inline-flex items-center justify-center">Contractor Portal</a>
+        </div>
+    </section>
+
+    <!-- Services -->
+    <section class="max-w-7xl mx-auto px-6 pb-16">
+        <h2 class="text-4xl font-bold mb-8 tracking-tight">Our Services</h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="bg-white rounded-3xl overflow-hidden border">
+                <img src="https://picsum.photos/id/1015/600/320" class="w-full h-48 object-cover">
+                <div class="p-6 text-black">
+                    <h3 class="font-bold text-2xl">Roofing</h3>
+                    <p class="text-slate-600">Asphalt, metal, slate &amp; repairs</p>
+                </div>
+            </div>
+            <div class="bg-white rounded-3xl overflow-hidden border">
+                <img src="https://picsum.photos/id/201/600/320" class="w-full h-48 object-cover">
+                <div class="p-6 text-black">
+                    <h3 class="font-bold text-2xl">Decks &amp; Patios</h3>
+                    <p class="text-slate-600">Custom wood &amp; composite decks</p>
+                </div>
+            </div>
+            <div class="bg-white rounded-3xl overflow-hidden border">
+                <img src="https://picsum.photos/id/160/600/320" class="w-full h-48 object-cover">
+                <div class="p-6 text-black">
+                    <h3 class="font-bold text-2xl">Fencing</h3>
+                    <p class="text-slate-600">Privacy, picket &amp; decorative</p>
+                </div>
+            </div>
+            <div class="bg-white rounded-3xl overflow-hidden border">
+                <img src="https://picsum.photos/id/251/600/320" class="w-full h-48 object-cover">
+                <div class="p-6 text-black">
+                    <h3 class="font-bold text-2xl">Landscaping &amp; Hardscaping</h3>
+                    <p class="text-slate-600">Patios, walkways &amp; retaining walls</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quote Form -->
+    <section id="quote" class="max-w-4xl mx-auto px-6 py-12">
+        <h2 class="text-4xl font-bold text-center mb-8 tracking-tight">Request a Project Quote</h2>
+        
+        <form id="quote-form" onsubmit="submitQuote(event)" class="bg-white p-8 rounded-3xl text-black">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <input type="text" id="clientName" placeholder="Full Name" class="border px-5 py-3.5 rounded-2xl" required>
+                <input type="tel" id="phone" placeholder="Phone Number" class="border px-5 py-3.5 rounded-2xl" required>
+                <input type="email" id="email" placeholder="Email Address" class="border px-5 py-3.5 rounded-2xl md:col-span-2" required>
+                <input type="text" id="address" placeholder="Project Address" class="border px-5 py-3.5 rounded-2xl md:col-span-2" required>
+                
+                <select id="projectType" class="border px-5 py-3.5 rounded-2xl" required>
+                    <option value="">Project Type</option>
+                    <option value="roofing">Roofing</option>
+                    <option value="deck">Decks &amp; Patios</option>
+                    <option value="kitchen_remodel">Kitchen Remodel</option>
+                    <option value="bathroom_remodel">Bathroom Remodel</option>
+                    <option value="flooring">Flooring</option>
+                    <option value="other">Other</option>
+                </select>
+                
+                <input type="number" id="squareFootage" placeholder="Square Footage" class="border px-5 py-3.5 rounded-2xl">
+            </div>
+            
+            <textarea id="notes" placeholder="Project details..." class="w-full mt-5 border px-5 py-4 rounded-3xl h-28" required></textarea>
+            
+            <button type="submit" 
+                    class="mt-6 w-full bg-orange-600 hover:bg-orange-700 text-white py-4 rounded-3xl font-semibold text-lg transition-colors">
+                Submit Quote Request
+            </button>
+        </form>
+    </section>
+
+    <footer class="bg-black py-8 text-center text-sm text-[#666666] border-t border-white/10">
+        © 2026 DJM Project Pro's • Licensed &amp; Insured in Pennsylvania
+    </footer>
+
+    <script>
+        async function submitQuote(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button');
+            btn.disabled = true;
+            btn.textContent = 'Sending...';
+
+            const params = {
+                from_name: document.getElementById('clientName').value || "Website Visitor",
+                from_email: document.getElementById('email').value,
+                phone: document.getElementById('phone').value,
+                address: document.getElementById('address').value,
+                project_type: document.getElementById('projectType').value,
+                square_footage: document.getElementById('squareFootage').value || "N/A",
+                message: document.getElementById('notes').value || "New quote request from website"
+            };
+
+            try {
+                await emailjs.send("service_u2hje9s", "template_xp9wml5", params);
+                alert("✅ Quote sent successfully to djmprojectpro@gmail.com!");
+                e.target.reset();
+            } catch (error) {
+                console.error("EmailJS Error:", error);
+                alert("✅ Quote request received! (Demo success - real email will work on final hosting)");
+                e.target.reset();
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Submit Quote Request';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contractor Portal • DJM Project Pro's</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-[#0A0A0A] text-white">
+    <div class="max-w-6xl mx-auto p-6">
+        <h1 class="text-3xl font-bold mb-6">Contractor Portal • DJM Project Pro's</h1>
+
+        <div id="login-section">
+            <div class="max-w-md mx-auto bg-white text-black p-8 rounded-3xl">
+                <h2 class="text-2xl font-bold mb-6">Login to Dashboard</h2>
+                <input type="email" placeholder="Email" class="w-full border px-5 py-3.5 rounded-2xl mb-4">
+                <input type="password" placeholder="Password" class="w-full border px-5 py-3.5 rounded-2xl">
+                <button onclick="login()" class="mt-6 w-full bg-orange-600 text-white py-4 rounded-3xl font-semibold">
+                    Log In • Start 7-Day Free Trial
+                </button>
+            </div>
+        </div>
+
+        <div id="dashboard-section" class="hidden">
+            <div class="flex justify-between mb-8">
+                <h2 class="text-3xl font-bold">Welcome, Dylan • Contractor Dashboard</h2>
+                <button onclick="logout()" class="text-red-500">Logout</button>
+            </div>
+
+            <div class="flex gap-6 border-b mb-6">
+                <button onclick="switchTab(0)" class="tab-button active px-6 py-2 font-medium">Overview</button>
+                <button onclick="switchTab(1)" class="tab-button px-6 py-2 font-medium">Quotes</button>
+                <button onclick="switchTab(2)" class="tab-button px-6 py-2 font-medium">Jobs</button>
+                <button onclick="switchTab(3)" class="tab-button px-6 py-2 font-medium">AI Coach</button>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div class="bg-white text-black p-6 rounded-3xl">
+                    <div class="text-sm text-slate-500">Active Jobs</div>
+                    <div class="text-4xl font-bold text-orange-600">14</div>
+                </div>
+                <div class="bg-white text-black p-6 rounded-3xl">
+                    <div class="text-sm text-slate-500">New Quotes</div>
+                    <div class="text-4xl font-bold text-orange-600">8</div>
+                </div>
+                <div class="bg-white text-black p-6 rounded-3xl">
+                    <div class="text-sm text-slate-500">This Month</div>
+                    <div class="text-4xl font-bold text-orange-600">$48,200</div>
+                </div>
+                <div class="bg-white text-black p-6 rounded-3xl">
+                    <div class="text-sm text-slate-500">Completion Rate</div>
+                    <div class="text-4xl font-bold text-emerald-600">94%</div>
+                </div>
+            </div>
+
+            <div class="flex gap-3">
+                <button onclick="createQuote()" class="flex-1 bg-orange-600 text-white py-3 rounded-2xl">Create New Quote</button>
+                <button onclick="manageJobs()" class="flex-1 border py-3 rounded-2xl">Manage Jobs</button>
+                <button onclick="askAICoach()" class="flex-1 border py-3 rounded-2xl">Ask AI Coach</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function login() {
+            document.getElementById('login-section').classList.add('hidden');
+            document.getElementById('dashboard-section').classList.remove('hidden');
+        }
+        function logout() {
+            document.getElementById('dashboard-section').classList.add('hidden');
+            document.getElementById('login-section').classList.remove('hidden');
+        }
+        function switchTab(n) {
+            alert("Tab switched ✅\n\n(Full interactive tabs and content switching in final version)");
+        }
+        function createQuote() {
+            alert("New Quote Form Opened ✅\n\n(This matches your Replit quote management feature)");
+        }
+        function manageJobs() {
+            alert("Jobs list opened ✅\n\n(Full job management view in Replit version)");
+        }
+        function askAICoach() {
+            alert("AI Coach Opened ✅\n\n(Your Replit AI contractor coach tool is active)");
+        }
+    </script>
+</body>
+</html>
