@@ -1,0 +1,15 @@
+{
+  "name": "djm-website",
+  "version": "1.0.0",
+  "description": "DJM Project Pro's website - Professional home improvement services in Carbon County, PA",
+  "scripts": {
+    "dev": "npx serve .",
+    "build": "echo 'Static site - no build needed'"
+  },
+  "keywords": ["contractor", "home-improvement", "carbon-county"],
+  "author": "DJM Project Pro's",
+  "license": "ISC",
+  "dependencies": {
+    "@vercel/speed-insights": "^1.0.12"
+  }
+}
