@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Free Site Visit | DJM Project Pro’s</title>
+  <style>
+    body { margin:0; background:#0d0d0d; color:#f4f1ea; font-family:Arial,Helvetica,sans-serif; }
+    .sheet { max-width:820px; margin:18px auto 40px; padding:22px 20px; background:#111; border:1px solid #ff6b0044; }
+    .head { text-align:center; }
+    .seal { width:180px; height:180px; margin:0 auto; border:4px solid #d4af37; border-radius:50%;
+      display:flex; flex-direction:column; align-items:center; justify-content:center;
+      color:#ffb24a; box-shadow:0 0 24px #ff6b0055; }
+    .seal b { font-size:36px; letter-spacing:.04em; }
+    .seal span { font-size:10px; letter-spacing:.12em; color:#d4af37; }
+    h1 { color:#ffb24a; letter-spacing:.08em; }
+    .rule { height:2px; background:linear-gradient(90deg,transparent,#ff6b00,#d4af37,transparent); }
+    .meta { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .right { text-align:right; }
+    .lbl { color:#ff6b00; font-size:11px; font-weight:800; letter-spacing:.12em; margin:8px 0 4px; }
+    .price { font-size:22px; font-weight:800; color:#ffb24a; }
+    .price a { color:inherit; text-decoration:none; }
+    .split { display:grid; gap:14px; }
+    @media(min-width:860px){ .split { grid-template-columns:1fr 1fr; } }
+    .block { background:#0a0a0a; border:1px solid #ff6b0028; padding:12px; }
+    label { display:block; color:#cbbda8; font-size:12px; margin-top:7px; }
+    input,select,textarea { width:100%; margin-top:3px; padding:10px; background:#111; color:#f4f1ea; border:1px solid #4a3318; font:inherit; }
+    .check { display:flex; gap:8px; color:#cbbda8; font-size:12px; margin:10px 0; }
+    .check input { width:auto; }
+    .send { display:block; width:100%; margin-top:8px; background:#ff6b00; color:#1a1008; border:0; padding:13px; font-weight:800; text-align:center; text-decoration:none; cursor:pointer; }
+    .ghost { display:block; margin-top:8px; padding:12px; text-align:center; color:#f5e6c8; border:1px solid #d4af37; text-decoration:none; }
+    .cal iframe { width:100%; height:680px; border:0; background:#fff; }
+    .deposit { margin-top:14px; background:#f5e6c8; color:#3d2b1f; padding:14px; }
+    footer { margin-top:16px; text-align:center; color:#b3a894; font-size:11px; }
+    .thanks { position:fixed; inset:0; background:#0d0d0d; display:grid; place-items:center; padding:16px; }
+    .hidden { display:none !important; }
+    a.gold { color:#d4af37; }
+  </style>
+</head>
+<body>
+  <div class="sheet" id="sheet">
+    <p style="text-align:center"><a class="gold" href="/">← DJM Project Pro’s</a></p>
+    <header class="head">
+      <div class="seal"><b>DJM</b><span>PROJECT PRO’S</span></div>
+      <p class="lbl" style="text-align:center">LICENSED &amp; INSURED · CARBON COUNTY PA</p>
+      <h1>FREE SITE VISIT</h1>
+      <div class="rule"></div>
+      <div class="meta">
+        <div><div class="lbl">CONTRACTOR</div>Dylan Mabe<br>DJM Project Pro’s</div>
+        <div class="right"><div class="lbl">TEXT / CALL</div><div class="price"><a href="tel:+12723945428">(272) 394-5428</a></div><div class="lbl">ESTIMATE</div><div class="price">FREE</div></div>
+      </div>
+    </header>
+    <p>Lehighton · Jim Thorpe · Nesquehoning · Palmerton · Weatherly · Carbon, Monroe &amp; Luzerne County</p>
+    <p>Fence · ramps &amp; grab bars · walkways &amp; patios · decks &amp; stairs</p>
+    <div class="split">
+      <form id="lead-form" class="block">
+        <div class="lbl">REQUEST THE VISIT</div>
+        <label>Client name *</label><input name="name" required />
+        <label>Mobile phone *</label><input name="phone" required inputmode="tel" />
+        <label>Email</label><input name="email" type="email" />
+        <label>Address / town *</label><input name="town" required />
+        <label>Project *</label>
+        <select name="project" required>
+          <option value="">Select</option>
+          <option>Fence / gate</option>
+          <option>Ramp / grab bars / stay-home work</option>
+          <option>Walkway or patio</option>
+          <option>Deck or stairs</option>
+          <option>Driveway</option>
+          <option>Other home improvement</option>
+        </select>
+        <label>Scope notes</label><textarea name="details" rows="4"></textarea>
+        <label class="check"><input type="checkbox" name="consent" required /><span>I agree that DJM Project Pro’s may text or call me about this job. Reply STOP to opt out.</span></label>
+        <button class="send" type="submit">SEND TO DJM PROJECT PRO’S</button>
+      </form>
+      <div class="block">
+        <div class="lbl">LOCK A TIME</div>
+        <p>30 / 45 / 60 min · at your house · no estimate fee</p>
+        <div class="cal"><iframe title="Free Site Visit" src="https://calendly.com/djmprojectpro/free-site-visit?hide_gdpr_banner=1&hide_landing_page_details=1"></iframe></div>
+      </div>
+    </div>
+    <div class="deposit"><b>AFTER THE VISIT</b><br>One price + add-ons. Quote good 14 days. Deposit only when you schedule the work.</div>
+    <footer>(272) 394-5428 · djmprojectpro@gmail.com<br>PA LICENSE # PA128765 | FULLY INSURED</footer>
+  </div>
+  <section id="thanks" class="thanks hidden">
+    <div class="sheet" style="text-align:center;max-width:460px">
+      <h1>GOT IT</h1>
+      <p>If your mail app opened, tap send.</p>
+      <a class="send" href="https://calendly.com/djmprojectpro/free-site-visit">BOOK THE VISIT</a>
+      <a class="ghost" href="sms:+12723945428">TEXT PHOTOS</a>
+    </div>
+  </section>
+  <script>
+    document.getElementById("lead-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var d = Object.fromEntries(new FormData(e.target).entries());
+      var body = "New DJM intake%0AName: "+encodeURIComponent(d.name)+"%0APhone: "+encodeURIComponent(d.phone)+"%0AEmail: "+encodeURIComponent(d.email||"")+"%0ATown: "+encodeURIComponent(d.town)+"%0AProject: "+encodeURIComponent(d.project)+"%0ADetails: "+encodeURIComponent(d.details||"")+"%0ATCPA consent: yes";
+      window.location.href = "mailto:djmprojectpro@gmail.com?subject="+encodeURIComponent("New lead — "+d.name+" — "+d.project)+"&body="+body;
+      document.getElementById("sheet").classList.add("hidden");
+      document.getElementById("thanks").classList.remove("hidden");
+    });
+  </script>
+</body>
+</html>
