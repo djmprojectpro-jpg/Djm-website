@@ -21,11 +21,9 @@
             </div>
         </div>
     </nav>
-
     <div class="max-w-7xl mx-auto px-6 py-12">
         <h1 class="text-4xl font-bold mb-2">Project Gallery</h1>
         <p class="text-zinc-400 mb-10">Real work completed across Carbon County, PA</p>
-
         <div class="mb-16">
             <h2 class="text-3xl font-bold mb-8">Recent jobs</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
@@ -36,69 +34,8 @@
             </div>
         </div>
     </div>
-
-    <div id="lightbox" onclick="closeLightbox()" class="hidden fixed inset-0 bg-black/95 z-[100] flex items-center justify-center p-4">
-        <div onclick="event.stopImmediatePropagation()" class="relative max-w-6xl w-full">
-            <button onclick="closeLightbox()" class="absolute -top-14 right-0 text-white text-4xl hover:text-orange-400">✕</button>
-            <img id="lightboxImage" class="w-full max-h-[80vh] object-contain rounded-2xl shadow-2xl">
-            <div id="lightboxCaption" class="text-center mt-5 text-xl text-zinc-300"></div>
-            <button onclick="prevImage(event)" class="absolute left-4 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-orange-600 text-white text-4xl px-5 py-3 rounded-full">←</button>
-            <button onclick="nextImage(event)" class="absolute right-4 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-orange-600 text-white text-4xl px-5 py-3 rounded-full">→</button>
-        </div>
-    </div>
-
     <footer class="bg-black border-t border-zinc-800 py-10 text-center text-sm text-zinc-400 mt-12">
-        <p>DJM Project Pro's • Carbon County, PA • (272) 394-5428</p>
+        <p>DJM Project Pro's • Carbon County, PA • (570) 599-1941</p>
     </footer>
-
-    <script>
-        let currentIndex = 0;
-        let galleryItems = [];
-        function initGallery() {
-            galleryItems = Array.from(document.querySelectorAll('.gallery-item'));
-            galleryItems.forEach((item, index) => item.addEventListener('click', () => openLightbox(index)));
-        }
-        function openLightbox(index) {
-            currentIndex = index;
-            const lightbox = document.getElementById('lightbox');
-            const img = document.getElementById('lightboxImage');
-            const caption = document.getElementById('lightboxCaption');
-            const item = galleryItems[currentIndex];
-            img.src = item.dataset.src;
-            caption.textContent = item.dataset.caption || '';
-            lightbox.classList.remove('hidden');
-            lightbox.classList.add('flex');
-        }
-        function closeLightbox() {
-            const lightbox = document.getElementById('lightbox');
-            lightbox.classList.remove('flex');
-            lightbox.classList.add('hidden');
-        }
-        function nextImage(e) {
-            e.stopImmediatePropagation();
-            currentIndex = (currentIndex + 1) % galleryItems.length;
-            updateLightbox();
-        }
-        function prevImage(e) {
-            e.stopImmediatePropagation();
-            currentIndex = (currentIndex - 1 + galleryItems.length) % galleryItems.length;
-            updateLightbox();
-        }
-        function updateLightbox() {
-            const img = document.getElementById('lightboxImage');
-            const caption = document.getElementById('lightboxCaption');
-            const item = galleryItems[currentIndex];
-            img.src = item.dataset.src;
-            caption.textContent = item.dataset.caption || '';
-        }
-        document.addEventListener('keydown', function(e) {
-            const lightbox = document.getElementById('lightbox');
-            if (lightbox.classList.contains('hidden')) return;
-            if (e.key === 'Escape') closeLightbox();
-            if (e.key === 'ArrowRight') nextImage(e);
-            if (e.key === 'ArrowLeft') prevImage(e);
-        });
-        window.onload = initGallery;
-    </script>
 </body>
 </html>
