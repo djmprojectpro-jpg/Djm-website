@@ -49,7 +49,11 @@
     <p>Lehighton · Jim Thorpe · Nesquehoning · Palmerton · Weatherly · Carbon, Monroe &amp; Luzerne County</p>
     <p>Fence · ramps &amp; grab bars · walkways &amp; patios · decks &amp; stairs</p>
     <div class="split">
-      <form id="lead-form" class="block">
+      <form id="lead-form" class="block" action="https://formsubmit.co/djmprojectpro@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="New DJM visit request" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_next" value="https://djmprojectpro.com/visit.html?thanks=1" />
         <div class="lbl">REQUEST THE VISIT</div>
         <label>Client name *</label><input name="name" required />
         <label>Mobile phone *</label><input name="phone" required inputmode="tel" />
@@ -81,20 +85,16 @@
   <section id="thanks" class="thanks hidden">
     <div class="sheet" style="text-align:center;max-width:460px">
       <h1>GOT IT</h1>
-      <p>If your mail app opened, tap send.</p>
+      <p>Your request is in Dylan’s inbox. Book a time or text photos.</p>
       <a class="send" href="https://calendly.com/djmprojectpro/free-site-visit">BOOK THE VISIT</a>
       <a class="ghost" href="sms:+15705991941">TEXT PHOTOS</a>
     </div>
   </section>
   <script>
-    document.getElementById("lead-form").addEventListener("submit", function (e) {
-      e.preventDefault();
-      var d = Object.fromEntries(new FormData(e.target).entries());
-      var body = "New DJM intake%0AName: "+encodeURIComponent(d.name)+"%0APhone: "+encodeURIComponent(d.phone)+"%0AEmail: "+encodeURIComponent(d.email||"")+"%0ATown: "+encodeURIComponent(d.town)+"%0AProject: "+encodeURIComponent(d.project)+"%0ADetails: "+encodeURIComponent(d.details||"")+"%0ATCPA consent: yes";
-      window.location.href = "mailto:djmprojectpro@gmail.com?subject="+encodeURIComponent("New lead — "+d.name+" — "+d.project)+"&body="+body;
+    if (location.search.indexOf("thanks=1") !== -1) {
       document.getElementById("sheet").classList.add("hidden");
       document.getElementById("thanks").classList.remove("hidden");
-    });
+    }
   </script>
 </body>
 </html>
