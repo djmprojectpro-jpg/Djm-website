@@ -7,49 +7,68 @@
   <meta name="description" content="Request a free site visit from DJM Project Pros. Dylan Mabe, Carbon County, PA.">
   <style>
     body { margin:0; background:#0d0d0d; color:#f4f1ea; font-family:Arial,Helvetica,sans-serif; }
-    .sheet { max-width:600px; margin:18px auto 40px; padding:22px 20px; background:#111; border:1px solid #ff6b0044; }
-    .head { text-align:center; }
+    .sheet { max-width:600px; margin:18px auto 40px; padding:22px 20px; background:#111; border:1px solid #ff6b0044; text-align:center; }
     .mark { width:72px; height:72px; margin:0 auto 8px; border-radius:50%; background:#ff6b00; color:#1a1008; display:grid; place-items:center; font-weight:800; }
     h1 { color:#ffb24a; letter-spacing:.08em; }
     .rule { height:2px; background:linear-gradient(90deg,transparent,#ff6b00,#d4af37,transparent); margin:12px 0; }
-    label { display:block; color:#cbbda8; font-size:12px; margin-top:10px; }
+    .open-btn { display:inline-block; background:#ff6b00; color:#1a1008; border:0; padding:14px 28px; font-weight:800; font-size:1.1rem; cursor:pointer; text-decoration:none; margin:20px 0; }
+    .modal { display:none; position:fixed; inset:0; background:rgba(0,0,0,.8); z-index:1000; place-items:center; }
+    .modal.open { display:grid; }
+    .modal-content { background:#111; border:1px solid #ff6b0044; padding:24px; max-width:420px; width:90%; position:relative; }
+    .close { position:absolute; top:10px; right:14px; color:#f4f1ea; font-size:24px; cursor:pointer; background:none; border:none; }
+    label { display:block; color:#cbbda8; font-size:12px; margin-top:10px; text-align:left; }
     input,select { width:100%; margin-top:3px; padding:10px; background:#111; color:#f4f1ea; border:1px solid #4a3318; font:inherit; box-sizing:border-box; }
-    .send { display:block; width:100%; margin-top:16px; background:#ff6b00; color:#1a1008; border:0; padding:13px; font-weight:800; text-align:center; text-decoration:none; cursor:pointer; }
+    .send { display:block; width:100%; margin-top:16px; background:#ff6b00; color:#1a1008; border:0; padding:13px; font-weight:800; cursor:pointer; }
     footer { margin-top:16px; text-align:center; color:#b3a894; font-size:11px; }
     a.gold { color:#d4af37; }
   </style>
 </head>
 <body>
   <div class="sheet">
-    <p style="text-align:center"><a class="gold" href="/">← DJM Project Pros</a></p>
-    <header class="head">
-      <div class="mark" aria-hidden="true">DJM</div>
-      <h1>FREE SITE VISIT</h1>
-      <div class="rule"></div>
-    </header>
-    <form action="https://formsubmit.co/djmprojectpro@gmail.com" method="POST">
-      <input type="hidden" name="_subject" value="New lead from website">
-      <input type="hidden" name="_template" value="table">
-      <input type="hidden" name="_captcha" value="false">
-      <input type="hidden" name="_next" value="https://djmprojectpro.com/thank-you.html">
-      <label>Name *</label><input type="text" name="name" required>
-      <label>Phone *</label><input type="tel" name="phone" required>
-      <label>Town *</label><input type="text" name="town" required>
-      <label>Job type *</label>
-      <select name="job_type" required>
-        <option value="">Select</option>
-        <option>Fence</option>
-        <option>Deck / Railing</option>
-        <option>Walkway / Patio</option>
-        <option>Ramp / Grab bar</option>
-        <option>Flooring / Drywall</option>
-        <option>Handyman / Cleanup</option>
-        <option>Other</option>
-      </select>
-      <button class="send" type="submit">Request free site visit</button>
-    </form>
-    <p style="text-align:center;margin-top:16px">Or call or text (272) 394-5428</p>
+    <p><a class="gold" href="/">← DJM Project Pros</a></p>
+    <div class="mark" aria-hidden="true">DJM</div>
+    <h1>FREE SITE VISIT</h1>
+    <div class="rule"></div>
+    <p>Request a free on-site visit. Carbon, Monroe, and Luzerne Counties.</p>
+    <button class="open-btn" id="openForm">Request free site visit</button>
+    <p>Or call or text (272) 394-5428</p>
     <footer>(272) 394-5428 · djmprojectpro@gmail.com<br>DJM Project Pros · Carbon County, PA</footer>
   </div>
+
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <button class="close" id="closeForm">&times;</button>
+      <h2 style="color:#ffb24a;margin-top:0;text-align:center">Request free site visit</h2>
+      <form action="https://formsubmit.co/djmprojectpro@gmail.com" method="POST">
+        <input type="hidden" name="_subject" value="New lead from website">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://djmprojectpro.com/thank-you.html">
+        <label>Name *</label><input type="text" name="name" required>
+        <label>Phone *</label><input type="tel" name="phone" required>
+        <label>Town *</label><input type="text" name="town" required>
+        <label>Job type *</label>
+        <select name="job_type" required>
+          <option value="">Select</option>
+          <option>Fence</option>
+          <option>Deck / Railing</option>
+          <option>Walkway / Patio</option>
+          <option>Ramp / Grab bar</option>
+          <option>Flooring / Drywall</option>
+          <option>Handyman / Cleanup</option>
+          <option>Other</option>
+        </select>
+        <button class="send" type="submit">Send request</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    const modal = document.getElementById('modal');
+    document.getElementById('openForm').onclick = () => modal.classList.add('open');
+    document.getElementById('closeForm').onclick = () => modal.classList.remove('open');
+    modal.onclick = (e) => { if (e.target === modal) modal.classList.remove('open'); };
+    if (location.hash === '#form') modal.classList.add('open');
+  </script>
 </body>
 </html>
